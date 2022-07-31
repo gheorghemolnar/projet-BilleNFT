@@ -5,11 +5,10 @@ function Link({ uri, text }) {
 function Footer() {
   return (
     <footer>
-      <h2>More resources</h2>
-      <Link uri={"https://trufflesuite.com"} text={"Truffle"} />
-      <Link uri={"https://reactjs.org"} text={"React"} />
-      <Link uri={"https://soliditylang.org"} text={"Solidity"} />
-      <Link uri={"https://ethereum.org"} text={"Ethereum"} />
+      <h2> ___ TO DO ___</h2>
+      <Link uri={"https://web3.corsica.com"} text={"Link 01 "} />
+      <Link uri={"https://web3.corsica.com"} text={"Link 02 "} />
+      <Link uri={"https://web3.corsica.com"} text={"Link 03 "} />
     </footer >
   );
 }
