@@ -1,5 +1,5 @@
-const BilleNFT = artifacts.require("BilleNFT");
+const BilleStore = artifacts.require("BilleStore");
 
-module.exports = function (deployer) {
-  deployer.deploy(BilleNFT, _name= "Bille NFT", _symbol = "BNF", _initBaseURI = "ipfs://QmXSEXvuttAcAZghUKyDzp5iDp41EvqDi6Hx3Bthggq8Uh/")
+module.exports = async function (deployer) {
+  deployer.deploy(BilleStore);
 }
