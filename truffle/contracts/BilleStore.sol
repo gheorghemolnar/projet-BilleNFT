@@ -31,7 +31,7 @@ contract BilleStore is Ownable {
     ///@dev Allows the creation of an Event
     function createEvent(uint _date, 
         ///dev TODO: v2 uint[3] memory _prices, 
-        uint[3] memory _ticketSupplies, string memory _name, string memory _symbol, string memory _description, string memory _uri) onlyOwner public {
+        string memory _name, string memory _symbol, string memory _description, string memory _uri, uint[] memory _ticketSupplies) onlyOwner public {
 
         uint _id = _eventId.current();
         _eventId.increment();
