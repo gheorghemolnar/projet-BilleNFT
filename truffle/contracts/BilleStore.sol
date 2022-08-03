@@ -28,15 +28,21 @@ contract BilleStore is Ownable {
 
     ///@notice Permet la création d'un Evenement
     ///@dev Allows the creation of an Event
-    function createEvent(uint _date, uint[3] memory _prices, uint[3] memory _ticketsSupplies, string memory _name, string memory _symbol, string memory _description, string memory _uri) onlyOwner public {
+    function createEvent(uint _date, 
+        ///dev TODO: v2 uint[3] memory _prices, 
+        uint[3] memory _ticketSupplies, string memory _name, string memory _symbol, string memory _description, string memory _uri) onlyOwner public {
+
         uint _id = _eventId.current();
         _eventId.increment();
 
         BilleEvent tmp = new BilleEvent(_id, _date, _name, _symbol, _description, _uri, 
         ///@dev TODO: v2
         ///_prices, 
-        _ticketsSupplies);
+        _ticketSupplies);
+
+        ///@dev change TEMPORARLY the ownership of the contract
         tmp.transferOwnership(owner());
+
         _idToEvent[_id] = tmp;
 
         emit EventCreated(_id, _date, _name, _description, _uri);
