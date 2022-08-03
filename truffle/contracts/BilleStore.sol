@@ -12,6 +12,13 @@ contract BilleStore is Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _eventId;
 
+    string name = "Bille NFT";
+    string symbol = "BNF";
+
+    ///@dev Mapping for Event contracts
+    mapping(uint => BilleEvent) private _idToEvent;
+
+    ///@dev Event emitted when a new BilleEvent is created
     event EventCreated (
         uint id,
         uint date,
@@ -19,12 +26,6 @@ contract BilleStore is Ownable {
         string description,
         string uri
     );
-
-    ///@dev Mapping for Event contracts
-    mapping(uint => BilleEvent) private _idToEvent;
-
-    string name = "Bille NFT";
-    string symbol = "BNF";
 
     ///@notice Permet la création d'un Evenement
     ///@dev Allows the creation of an Event
