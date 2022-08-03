@@ -1,5 +1,7 @@
 const actions = {
-  init: "INIT",
+  init: "INIT",  
+  eventAdded: "EVENTDETAILS_ADDED",
+  // ticketSoldAdded: "TICKETSOLD_ADDED"
 };
 
 const initialState = {
@@ -7,7 +9,10 @@ const initialState = {
   web3: null,
   accounts: null,
   networkID: null,
-  contract: null
+  contract: null,
+  billeEvent: null,
+  eventsCreate: [],
+  ticketSold: []
 };
 
 const reducer = (state, action) => {
@@ -15,6 +20,16 @@ const reducer = (state, action) => {
   switch (type) {
     case actions.init:
       return { ...state, ...data };
+    case actions.eventAdded:
+        return {
+           ...state, 
+           eventsCreate: [...state.eventsCreate, data.evCreate]
+          };
+    case actions.ticketSoldAdded:
+        return {
+            ...state,
+            ticketSold: [...state.ticketSold, data.evTicketSold]
+          };
     default:
       throw new Error("Undefined reducer action type");
   }
