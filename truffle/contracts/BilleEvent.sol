@@ -16,11 +16,13 @@ contract BilleEvent is ERC1155, ERC1155Holder, Ownable {
     string symbol;
     string description;
 
+    ///@dev Ticket Categories
+    uint constant NB_TICKET_CATEGORIES = 3;
+
     ///@dev TODO: v2
-    ///    uint[3] prices;
+    ///    uint[] prices;
     uint mintRate = 0.02 ether;
-    uint[3] ticketsSupplies;
-    uint[3] ticketsSold;
+
 
     /// @dev TypeTicket: DOE: fosse, STD: gradins, VIP: vip
     enum TicketType {
@@ -40,38 +42,47 @@ contract BilleEvent is ERC1155, ERC1155Holder, Ownable {
 
     /// @notice Mapping Tickets emis; l'id du Ticket => et le Ticket
     /// @dev Mapping Id Ticket => Ticket Info
-    mapping(uint => TicketInfo) public _tickesList;
+    mapping(uint => TicketInfo) public _ticketsList;
 
-    /// @notice Mapping Compteur Categorie Ticket => Nombre de tickets
-    /// @dev Mapping Ticket Category => Ticket counter
-    mapping(uint => Counters.Counter) public _tickesCounters;
+    /// @notice Mapping Compteur Categorie Ticket => Nombre de tickets disponibles
+    /// @dev Mapping Ticket Category => Number of Tickets available (supplies)
+    mapping(uint => uint) public _ticketsSupplies;
+
+    /// @notice Mapping Compteur Categorie Ticket => Nombre de tickets vendus
+    /// @dev Mapping Ticket Category => Number of Tickets sold
+    mapping(uint => Counters.Counter) public _ticketsSold;
 
     /// @notice Mapping Tickets Vendus => address de l'acheteur
     /// @dev Mapping Sold tickets: Id ticket => Address of the buyer
-    mapping(uint => address) public _tickesSold;
+    mapping(uint => address) public _ticketsSoldTo;
 
     /// @dev Event emitted when a ticket is sold
     event TicketSold(uint indexed idEvent, uint indexed id, TicketType category, address buyer, uint quantity);
-
+   
     constructor(uint _idEvent, uint _date, string memory _name, string memory _symbol, string memory _description, 
         string memory _uri, 
         ///@dev TODO: v2
-        //uint[3] memory _prices, 
-        uint[3] memory _supplies) ERC1155(_uri) {
-        id = _idEvent;
-        date = _date;
-        name = _name;
-        symbol = _symbol;
-        description = _description;
-        ///@dev TODO: v2
-        ///prices = _prices;
-        ticketsSupplies = _supplies;
+        //uint[] memory _prices, 
+        uint[] memory _supplies) ERC1155(_uri) {
+            id = _idEvent;
+            date = _date;
+            name = _name;
+            symbol = _symbol;
+            description = _description;
+            
+            ///@dev Initialisations
+            for(uint i = 0; i < NB_TICKET_CATEGORIES; i++) {
+                ///@dev Initialise supplies for each ticket category
+                _ticketsSupplies[i] = _supplies[i];
+                ///@dev TODO: v2
+                ///prices = _prices;
+            }
+            
     }
 
-    function buyTickets(TicketType _type, uint _quantity) public payable {
-        require(_type >= TicketType.DOE && _type <= TicketType.VIP, "Ticket category unkown");
-        uint _category = uint(_type);
-        require(ticketsSupplies[_category] > 0 && (_quantity <= (ticketsSupplies[_category] - ticketsSold[_category] )), "Supply for this ticket is not enough");
+    function buyTickets(uint _category, uint _quantity) public payable {
+        require(_category >= uint(TicketType.DOE) && _category <= uint(TicketType.VIP), "Ticket category unkown");
+        require(_ticketsSupplies[_category] > 0 && (_quantity <= (_ticketsSupplies[_category] - _ticketsSold[_category].current() )), "Supply for this ticket is not enough");
         require(msg.value == mintRate * _quantity, "Transaction value not equal to price required");
 
         ///@dev TODO: v2
@@ -80,13 +91,13 @@ contract BilleEvent is ERC1155, ERC1155Holder, Ownable {
         ///@dev Tickets Minting
 
         ///@dev Ticket by Category
-        for(uint i = 0; i < _quantity; i++){
-            uint idTicket = _tickesCounters[_category].current();
-            _tickesCounters[_category].increment();
+        for(uint i = 0; i < _quantity; i++) {
+            uint idTicket = _ticketsSold[_category].current();
+            _ticketsSold[_category].increment();
 
             _mint(address(this), idTicket, 1, "");
-            _tickesList[idTicket] = TicketInfo({id: idTicket, place: idTicket + 1, isSold: true, isUsed: false, category: TicketType(_category)});
-            _tickesSold[idTicket] = msg.sender;
+            _ticketsList[idTicket] = TicketInfo({id: idTicket, place: idTicket + 1, isSold: true, isUsed: false, category: TicketType(_category)});
+            _ticketsSoldTo[idTicket] = msg.sender;
 
             emit TicketSold(id, idTicket, TicketType(_category), msg.sender, 1);
         }
