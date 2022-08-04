@@ -1,21 +1,47 @@
+import { Outlet, useRoutes } from "react-router-dom";
+
 import { EthProvider } from "./contexts/EthContext";
-// import Demo from "./components/Demo";
 import Navbar from "./components/Navbar";
 import Listing from "./components/Listing";
-import Footer from "./components/Footer";
+import FormEvent from "./components/FormEvent";
+import FormTicket from "./components/FormTicket";
+import NoMatch from "./components/NoMatch";
 import "./App.css";
 
-function App() {
+export default function App() {
+  let routes = [
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        { index: true, element: <Listing /> },
+        {
+          path: "/addevent",
+          element: <FormEvent />,
+        },
+        {
+          path: "/buyticket",
+          element: <FormTicket />,
+        },
+        { path: "*", element: <NoMatch /> },
+      ],
+    },
+  ];
+  let element = useRoutes(routes);
+
   return (
     <EthProvider>
-          <Navbar />
-          {/* <Demo /> */}
-          <Listing />
-          <hr />
-          <hr />
-          <Footer />
+      {element}
     </EthProvider>
   );
 }
 
-export default App;
+
+function Layout() {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
+}
