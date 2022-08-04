@@ -5,6 +5,8 @@ import { Link, useParams } from "react-router-dom";
 
 export default function ViewEvent() {
   /* const { state: { artifact, contract } } = useEth(); */
+  let { id } = useParams();
+
   return (
     <main>
       <section className="py-5 text-center container">
