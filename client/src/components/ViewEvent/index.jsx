@@ -22,19 +22,19 @@ export default function ViewEvent() {
 
       <div className="event-view p-3 bg-light">
         <div className="row mb-3">
-          <label for="colFormLabelSm" className="col-sm-2 col-form-label col-form-label">Date</label>
+          <label htmlFor="colFormLabelSm" className="col-sm-2 col-form-label col-form-label">Date</label>
           <div className="col-sm-10">
             <input type="email" className="form-control" id="colFormLabelSm" placeholder="col-form-label"  disabled />
           </div>
         </div>
         <div className="row mb-3">
-          <label for="colFormLabel" className="col-sm-2 col-form-label">Name</label>
+          <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Name</label>
           <div className="col-sm-10">
             <input type="email" className="form-control" id="colFormLabel" placeholder="col-form-label" disabled />
           </div>
         </div>
         <div className="row">
-          <label for="colFormLabelLg" className="col-sm-2 col-form-label col-form-label">Description</label>
+          <label htmlFor="colFormLabelLg" className="col-sm-2 col-form-label col-form-label">Description</label>
           <div className="col-sm-10">
             <input type="email" className="form-control" id="colFormLabelLg" placeholder="col-form-label" disabled />
           </div>
