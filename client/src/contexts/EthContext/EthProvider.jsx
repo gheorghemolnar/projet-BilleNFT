@@ -15,9 +15,11 @@ function EthProvider({ children }) {
         const accounts = await web3.eth.requestAccounts();
         const networkID = await web3.eth.net.getId();
         const { abi } = artifact;
-        let address, contract, billeEvent, address2;
+        let address, contract, billeEvent;
         let initEvents = [], ticketSolds = [];
         try {
+console.log(`🚀 > networkID`, networkID);
+console.log(`🚀 > artifact`, artifact)
           address = artifact.networks[networkID].address;
           contract = new web3.eth.Contract(abi, address);
 

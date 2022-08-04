@@ -1,18 +1,19 @@
 import { EthProvider } from "./contexts/EthContext";
-import Demo from "./components/Demo";
+// import Demo from "./components/Demo";
+import Navbar from "./components/Navbar";
+import Listing from "./components/Listing";
 import Footer from "./components/Footer";
 import "./App.css";
 
 function App() {
   return (
     <EthProvider>
-      <div id="App" >
-        <div className="container">
-          <Demo />
+          <Navbar />
+          {/* <Demo /> */}
+          <Listing />
+          <hr />
           <hr />
           <Footer />
-        </div>
-      </div>
     </EthProvider>
   );
 }

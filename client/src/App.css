@@ -1,10 +1,6 @@
 #App {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.6rem;
+  /* width: 100%;
+  height: 100%; */
   --primary-color: #1266cc;
   --secondary-color: #f96400;
   --flash-color: rgb(89, 255, 0);
@@ -14,41 +10,72 @@
 }
 
 #App .container {
-  width: 40%;
-  min-width: 60rem;
-  max-width: 75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100%;
+  width: 100%;
 }
 
-code {
-  display: block;
-  white-space: pre-wrap;
-  padding: 1.2rem 2rem;
-  border-radius: 1rem;
-  background-color: var(--light-gray);
-  font-size: 1.4rem;
+/* ******************** */
+/* Boostrap Start */
+/* ******************** */
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
-code span {
-  transition: all 0.3s;
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
 }
 
-code span.primary-color {
-  color: var(--primary-color);
+.b-example-divider {
+  height: 3rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
 }
 
-code span.secondary-color {
-  color: var(--secondary-color);
+.b-example-vr {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 100vh;
 }
 
-code span.dim-color {
-  color: var(--gray);
+.bi {
+  vertical-align: -.125em;
+  fill: currentColor;
 }
 
-code span.flash {
-  background-color: var(--flash-color);
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
 }
 
+.nav-scroller .nav {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+/* ******************** */
+/* Boostrap End */
+/* ******************** */
+
+/*
 details {
   margin: 1.6rem 0;
   padding: 0.5rem 2rem 0.5rem 0;
@@ -141,3 +168,4 @@ hr {
   display: inline-block;
   margin: 2rem 1rem 0 0;
 }
+*/
