@@ -1,7 +1,10 @@
 import React from 'react';
+import { useForm } from "react-hook-form";
 // import useEth from "../../contexts/EthContext/useEth";
 
 export default function FormEvent() {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const onSubmit = data => console.log(data);
   /* const { state: { artifact, contract } } = useEth(); */
   return(
     <main>
@@ -14,7 +17,7 @@ export default function FormEvent() {
         </div>
       </section>
 
-      <form className="p-3 bg-light">
+      <form className="p-3 bg-light" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
           <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
