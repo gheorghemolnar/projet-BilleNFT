@@ -23,12 +23,12 @@ export default function App() {
           element: <ViewEvent />,
         },
         {
-          path: "/addevent",
-          element: <FormEvent />,
+          path: "/buyticket/:id",
+          element: <FormTicket />,
         },
         {
-          path: "/buyticket",
-          element: <FormTicket />,
+          path: "/addevent",
+          element: <FormEvent />,
         },
         { path: "*", element: <NoMatch /> },
       ],
