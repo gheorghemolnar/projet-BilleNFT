@@ -18,8 +18,6 @@ function EthProvider({ children }) {
         let address, contract, billeEvent;
         let initEvents = [], ticketSolds = [];
         try {
-console.log(`🚀 > networkID`, networkID);
-console.log(`🚀 > artifact`, artifact)
           address = artifact.networks[networkID].address;
           contract = new web3.eth.Contract(abi, address);
 
