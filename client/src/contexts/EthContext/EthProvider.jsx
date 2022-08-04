@@ -2,7 +2,8 @@ import React, { useReducer, useCallback, useEffect } from "react";
 import Web3 from "web3";
 import EthContext from "./EthContext";
 import { reducer, actions, initialState } from "./state";
-import BilleEventBuild from "../../contracts/BilleEvent.json";
+import CommunicationABI from "../../contracts/Communication.json";
+import BilleEventABI from "../../contracts/BilleEvent.json";
 
 function EthProvider({ children }) {
   
@@ -15,24 +16,27 @@ function EthProvider({ children }) {
         const accounts = await web3.eth.requestAccounts();
         const networkID = await web3.eth.net.getId();
         const { abi } = artifact;
-        let address, contract, billeEvent;
+        let address, contractBilleStore, contractBilleEvent, contractCommunication;
         let initEvents = [], ticketSolds = [];
         try {
           address = artifact.networks[networkID].address;
-          contract = new web3.eth.Contract(abi, address);
-
+          contractBilleStore = new web3.eth.Contract(abi, address);
+ 
           // On recup tous les events passés du contrat
-          if(contract) {
+          if(contractBilleStore) {
             const options = { fromBlock: 0, toBlock: 'latest' };
 
             [initEvents] = await Promise.all([
-              contract.getPastEvents('EventCreated', options)
+              contractBilleStore.getPastEvents('EventCreated', options)
             ]);
 
-            billeEvent = new web3.eth.Contract(BilleEventBuild.abi, address);
+            contractBilleEvent = new web3.eth.Contract(BilleEventABI.abi, address);
             [ticketSolds] = await Promise.all([
-              billeEvent.getPastEvents('TicketSold', options)
+              contractBilleEvent.getPastEvents('TicketSold', options)
             ]);
+
+            contractCommunication = new web3.eth.Contract(CommunicationABI.abi, address);
+            
           }
         } catch (err) {
           console.error(err);
@@ -40,7 +44,7 @@ function EthProvider({ children }) {
         
         dispatch({
           type: actions.init,
-          data: { artifact, web3, accounts, networkID, contract, billeEvent, eventsCreate: [...initEvents], ticketSold: [...ticketSolds] }
+          data: { artifact, web3, accounts, networkID, contractBilleStore, contractBilleEvent, contractCommunication, eventsCreated: [...initEvents], ticketsSold: [...ticketSolds] }
         });
       }
     }, []);
@@ -68,8 +72,8 @@ function EthProvider({ children }) {
     const eventsSubscriptions = {};
     const options1 = {fromBlock: 'latest'};
 
-    if(state.contract) {
-      const subEvCreate = state.contract.events.EventCreated(options1)
+    if(state.contractBilleStore) {
+      const subEvCreate = state.contractBilleStore.events.EventCreated(options1)
       .on('connected', event => {
         console.log("Les détails de l'évènement sont connu", event);
       })
@@ -84,7 +88,7 @@ function EthProvider({ children }) {
       // add subscription for Voters
       eventsSubscriptions['eventsCreate'] = subEvCreate;
 
-      const subTicketSold = state.billeEvent.events.TicketSold(options1)
+      const subTicketSold = state.contractBilleEvent.events.TicketSold(options1)
       .on('connected', event => {
         console.log("Les détails de l'évènement sont connu", event);
       })
@@ -109,7 +113,7 @@ function EthProvider({ children }) {
         subsription.unsubscribe();
       })
     };
-  }, [init, state.artifact, state.contract, state.billeEvent]);
+  }, [init, state.artifact, state.contractBilleStore, state.contractBilleEvent], state.contractCommunication);
 
   
 
