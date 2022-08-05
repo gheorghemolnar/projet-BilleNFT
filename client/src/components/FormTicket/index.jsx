@@ -27,16 +27,16 @@ export default function FormEvent() {
   useEffect(() => {
     const fetchData = async(tmp) => {
       // const address = contractBilleEvent.address();
-      if(tmp)
-        console.log(`🚀🚀🚀🚀🚀🚀🚀🚀🚀 Desc> tmp`, await tmp.methods.description().call());
-        console.log(`🚀🚀🚀🚀🚀🚀🚀🚀🚀 Name> tmp`, await tmp.methods.getBalance().call({from: accounts[0]}));
+      if(tmp){
+        console.log(`🚀 balance Contrat ${id}`, await tmp.methods.getBalance().call({from: accounts[0]}));
+      }
 
         setContractBilleEvent(tmp);
       // return address;
     }
 
     if (web3) {
-      const tmp = getContractEventByAddress(web3, "0x33afD0d1639EF24602e27c17A325b098F6867936");
+      const tmp = getContractEventByAddress(web3, id);
       fetchData(tmp);
 
     }
@@ -56,8 +56,6 @@ export default function FormEvent() {
 
   const handleTicketBuy = async () => {
     const {category, quantity}= ticketOrder;
-console.log(`🚀 > ticketOrder`, {ticketOrder});
-console.log(`🚀 > contractBilleEvent`, {contractBilleEvent});
 
     if (contractBilleEvent) {
       const price = web3.utils.toWei('0.02', 'ether') * quantity;
@@ -69,7 +67,7 @@ console.log(`🚀 > contractBilleEvent`, {contractBilleEvent});
         navigate(`/events/${id}`);
 
       }catch(err) {
-console.log(`🚀 ~ file: index.jsx ~ line 73 ~ handleTicketBuy ~ err`, err);
+        console.log(`handleTicketBuy: Error `, err);
         setErrMessage("Une erreur est survenue. Essayez ultérieurement.");
       }finally {
         setIsLoading(false);
@@ -96,28 +94,11 @@ console.log(`🚀 ~ file: index.jsx ~ line 73 ~ handleTicketBuy ~ err`, err);
       setErrlist([]);
 
       //call Api
-console.log(`🚀 > handleTicketBuy > 01`);
-        await handleTicketBuy();
-
-  /*
-      //let { data } = await axios.post( 'https://route-egypt-api.herokuapp.com/signin' , user );
-
-      // console.log(res);
-      if(data.status === 401){
-        setErrMessage(data.message);
-      }else{
-        setErrMessage('');
-        // console.log('Successeded Registeration !! Congrates');
-        // console.log(data.token);
-        navigate('/');
-      }
-      */
+      await handleTicketBuy();
     }
     
   };
   
-  console.log(`🚀 RENDER`, contractBilleEvent);
-
   return(
     <main>
       <section className="py-5 text-center container">
