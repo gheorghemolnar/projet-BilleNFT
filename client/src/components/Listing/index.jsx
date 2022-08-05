@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
+import NoticeNoArtifact from "../NoticeNoArtifact";
+import NoticeWrongNetwork from "../NoticeWrongNetwork";
 import useEth from "../../contexts/EthContext/useEth";
 import { getDateFromTimestamp } from "../../utils";
 
 export default function Listing() {
-  const { state: { eventsCreated } } = useEth();
+  const { state: { artifact, contractBilleStore, eventsCreated } } = useEth();
 
   const eventContent =
     eventsCreated.map(({ returnValues }) => {
@@ -53,7 +55,11 @@ export default function Listing() {
 
       <section className="py-5 text-center container">
         <div className="row">
-          {eventContent}
+        {
+        !artifact ? <NoticeNoArtifact /> :
+          !contractBilleStore ? <NoticeWrongNetwork /> :
+          eventContent
+        }
         </div>
       </section>
 
