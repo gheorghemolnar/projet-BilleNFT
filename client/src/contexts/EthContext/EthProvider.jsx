@@ -22,6 +22,7 @@ function EthProvider({ children }) {
           address = artifact.networks[networkID].address;
           contractBilleStore = new web3.eth.Contract(abi, address);
           contractBilleEvent = new web3.eth.Contract(BilleEventABI.abi, address);
+          contractCommunication = new web3.eth.Contract(CommunicationABI.abi, address);
 
           // On recup tous les events passés du contrat
           if(contractBilleStore && contractBilleEvent) {
@@ -33,7 +34,6 @@ function EthProvider({ children }) {
             ]);
 
 
-            // contractCommunication = new web3.eth.Contract(CommunicationABI.abi, address);
             
           }
         } catch (err) {
@@ -43,8 +43,8 @@ function EthProvider({ children }) {
         dispatch({
           type: actions.init,
           data: { artifact, web3, accounts, networkID, 
-            // contractBilleStore, 
-            // contractBilleEvent, contractCommunication, 
+            contractBilleStore, 
+            contractBilleEvent, contractCommunication, 
             eventsCreated: [...initEvents], ticketsSold: [...ticketSolds] 
           }
         });

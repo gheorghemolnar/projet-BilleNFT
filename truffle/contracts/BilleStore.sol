@@ -24,7 +24,8 @@ contract BilleStore is Ownable {
         uint date,
         string name,
         string description,
-        string uri
+        string uri,
+        address eventAddress
     );
 
     ///@notice Permet la création d'un Evenement
@@ -46,7 +47,7 @@ contract BilleStore is Ownable {
 
         _idToEvent[_id] = tmp;
 
-        emit EventCreated(_id, _date, _name, _description, _uri);
+        emit EventCreated(_id, _date, _name, _description, _uri, address(tmp));
     }
 
     ///@notice Permet la récupération de l'addres d'un contrat Evenement
