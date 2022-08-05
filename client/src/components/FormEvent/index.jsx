@@ -6,27 +6,26 @@ import useEth from "../../contexts/EthContext/useEth";
 export default function FormEvent() {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { state: {accounts, contractBilleStore, contractBilleEvent, contractCommunication, eventsCreated, ticketsSold}} = useEth();
+  const { state: { accounts, contractBilleStore, contractBilleEvent, contractCommunication, eventsCreated, ticketsSold } } = useEth();
   const onSubmit = async data => {
     console.log(data);
     await handleCreateEvent(data);
   }
 
 
-  const handleCreateEvent = async(params) => {
-    const {dateEvent, nameEvent, symbol, description, uri, ticketSupply1, ticketSupply2, ticketSupply3} =params;
-       try{
-      const dateTimestamp = Number (new Date(dateEvent));
-      await contractBilleStore.methods.createEvent(dateTimestamp, nameEvent, symbol, description, uri, [ticketSupply1, ticketSupply2, ticketSupply3]).send({from: accounts[0]});
+  const handleCreateEvent = async (params) => {
+    const { dateEvent, nameEvent, symbol, description, uri, ticketSupply1, ticketSupply2, ticketSupply3 } = params;
+    try {
+      const dateTimestamp = Number(new Date(dateEvent));
+      await contractBilleStore.methods.createEvent(dateTimestamp, nameEvent, symbol, description, uri, [ticketSupply1, ticketSupply2, ticketSupply3]).send({ from: accounts[0] });
       navigate('/');
-    }catch(err){
-        console.log("Erreur", err);
-    }    
+    } catch (err) {
+      console.log("Erreur", err);
+    }
   }
 
-  
-  /* const { state: { artifact, contract } } = useEth(); */
-  return(
+
+  return (
     <main>
       <section className="py-5 text-center container">
         <div className="row py-lg-5">
@@ -39,78 +38,63 @@ export default function FormEvent() {
 
       <form className="p-3 bg-light" onSubmit={handleSubmit(onSubmit)} >
 
-        <table>          
-          <tbody>
-            <tr>
-              <td>
-                <label className="p-3 bg-light" htmlFor="name">Nom de l'événement</label>
-              </td>
-              <td>
-              <input defaultValue="Toto" {...register("nameEvent")}      />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label className="p-3 bg-light" htmlFor="date">Date de l'évènement</label>
-              </td>
-              <td>
-                <input defaultValue="2022-05-20" type="date" {...register("dateEvent")}      />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label className="p-3 bg-light" htmlFor="monnaie">Monnaie</label>
-              </td>
-              <td>
-                <input defaultValue="BNF" {...register("symbol")}      />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label className="p-3 bg-light" htmlFor="description">Description</label>
-              </td>
-              <td>
-                <input defaultValue="La legende" {...register("description")}      />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label className="p-3 bg-light" htmlFor="Uri :">Uri</label>
-              </td>
-              <td>
-                <input defaultValue="181818222" {...register("uri")}      />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label className="p-3 bg-light" htmlFor="ticketSupplies">Nombre de tickets Pelouse</label>
-              </td>
-              <td>
-                <input type="number" defaultValue={50} {...register("ticketSupply1")}      />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label className="p-3 bg-light" htmlFor="ticketSupplies">Nombre de tickets Gradin</label>
-              </td>
-              <td>
-                <input type="number" defaultValue={30} {...register("ticketSupply2")}      />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label className="p-3 bg-light" htmlFor="ticketSupplies">Nombre de tickets VIP</label>
-              </td>
-              <td>
-                <input type="number" defaultValue={10} {...register("ticketSupply3")}      />
-              </td>
-            </tr>
-            </tbody>
-        </table>
+        <div className="mb-3 row">
+          <label htmlFor="name" className="col-sm-4 col-form-label">Nom de l'événement</label>
+          <div className="col-sm-8">
+            <input defaultValue="Toto" {...register("nameEvent")} />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="date" className="col-sm-4 col-form-label">Date de l'évènement</label>
+          <div className="col-sm-8">
+            <input defaultValue="2022-10-20" type="date" {...register("dateEvent")} />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="symbol" className="col-sm-4 col-form-label">Monnaie</label>
+          <div className="col-sm-8">
+            <input defaultValue="BNF" {...register("symbol")} />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="description" className="col-sm-4 col-form-label">Description</label>
+          <div className="col-sm-8">
+            <input defaultValue="La legende" {...register("description")} />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="uri" className="col-sm-4 col-form-label">Uri</label>
+          <div className="col-sm-8">
+            <input defaultValue="181818222" {...register("uri")} />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="ticketSupplies1" className="col-sm-4 col-form-label">Nombre de tickets Pelouse</label>
+          <div className="col-sm-8">
+            <input type="number" defaultValue={50} {...register("ticketSupply1")} />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="ticketSupplies2" className="col-sm-4 col-form-label">Nombre de tickets Gradin</label>
+          <div className="col-sm-8">
+            <input type="number" defaultValue={30} {...register("ticketSupply2")} />
+          </div>
+        </div>
+        <div className="mb-3 row">
+          <label htmlFor="ticketSupplies2" className="col-sm-4 col-form-label">Nombre de tickets VIP</label>
+          <div className="col-sm-8">
+            <input type="number" defaultValue={10} {...register("ticketSupply3")} />
+          </div>
+        </div>
 
-        <button  className="btn btn-primary" type="submit" >Envoyer</button>
+        <div className="mb-3 row container text-center">
+          <div className="col">
+            <button className="btn btn-primary" type="submit" >Envoyer</button>
+          </div>
+        </div>
+
       </form>
     </main>
   );
-  
+
 }
