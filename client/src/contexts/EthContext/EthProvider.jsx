@@ -2,8 +2,7 @@ import React, { useReducer, useCallback, useEffect } from "react";
 import Web3 from "web3";
 import EthContext from "./EthContext";
 import { reducer, actions, initialState } from "./state";
-import CommunicationABI from "../../contracts/Communication.json";
-import BilleEventABI from "../../contracts/BilleEvent.json";
+import { getContractStoreByAddress, getContractEventByAddress, getContractCommByAddress } from '../../utils';
 
 function EthProvider({ children }) {
   
@@ -20,10 +19,10 @@ function EthProvider({ children }) {
         let initEvents = [], ticketSolds = [];
         try {
           address = artifact.networks[networkID].address;
-          contractBilleStore = new web3.eth.Contract(abi, address);
-          contractBilleEvent = new web3.eth.Contract(BilleEventABI.abi, address);
-          contractCommunication = new web3.eth.Contract(CommunicationABI.abi, address);
-
+          contractBilleStore = getContractStoreByAddress(web3, abi, address);
+          contractBilleEvent = getContractEventByAddress(web3, address);
+          contractCommunication = getContractCommByAddress(web3, address);
+          
           // On recup tous les events passés du contrat
           if(contractBilleStore && contractBilleEvent) {
             const options = { fromBlock: 0, toBlock: 'latest' };
@@ -33,8 +32,6 @@ function EthProvider({ children }) {
               contractBilleEvent.getPastEvents('TicketSold', options)
             ]);
 
-
-            
           }
         } catch (err) {
           console.error(err);
