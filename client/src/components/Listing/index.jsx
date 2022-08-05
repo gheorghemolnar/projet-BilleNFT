@@ -2,17 +2,15 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 import useEth from "../../contexts/EthContext/useEth";
+import { getDateFromTimestamp } from "../../utils";
 
 export default function Listing() {
-  const { state: { accounts, contractBilleStore, contractBilleEvent, contractCommunication, eventsCreated, ticketsSold } } = useEth();
-
-  console.log("🚀 ~ file: index.jsx ~ line 8 ~ Listing ~ eventsCreated", eventsCreated);
+  const { state: { eventsCreated } } = useEth();
 
   const eventContent =
     eventsCreated.map(({ returnValues }) => {
-      const { id, eventAddress, name, description, date } = returnValues;
-      const dateEve = Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
-      console.log("🚀 ~ file: index.jsx ~ line 15 ~ Listing ~ id", id);
+      const { eventAddress, name, description, date } = returnValues;
+      const dateEve = getDateFromTimestamp(date);
 
       return <div className="col-lg-6 p-3" key={returnValues.id}>
         <div className="card shadow-sm">
@@ -21,7 +19,7 @@ export default function Listing() {
           <div className="card-body">
 
             {/* <div className="btn-group"> */}
-            <Link to={`/events/${id}`} >
+            <Link to={`/events/${eventAddress}`} >
 
               <p className="card-text">  {name} </p>
               <p className="card-text"> {description}</p>
