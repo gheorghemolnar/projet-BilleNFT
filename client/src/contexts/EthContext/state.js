@@ -12,7 +12,8 @@ const initialState = {
   contract: null,
   billeEvent: null,
   eventsCreated: [],
-  ticketsSold: []
+  ticketsSold: [],
+  owner: false
 };
 
 const reducer = (state, action) => {

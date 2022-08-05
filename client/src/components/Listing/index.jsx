@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import NoticeNoArtifact from "../NoticeNoArtifact";
 import NoticeWrongNetwork from "../NoticeWrongNetwork";
 import useEth from "../../contexts/EthContext/useEth";
-import { getDateFromTimestamp } from "../../utils";
+import { getDateFromTimestamp, isOwner } from "../../utils";
+import { useEffect } from 'react';
 
 export default function Listing() {
-  const { state: { artifact, contractBilleStore, eventsCreated } } = useEth();
-
+  const { state: { artifact, contractBilleStore, eventsCreated, accounts, web3, networkID, owner } } = useEth();
+  
+  const isAdmin = isOwner(accounts, owner);
+  
   const eventContent =
     eventsCreated.map(({ returnValues }) => {
       const { eventAddress, name, description, date } = returnValues;
@@ -20,7 +23,6 @@ export default function Listing() {
 
           <div className="card-body">
 
-            {/* <div className="btn-group"> */}
             <Link to={`/events/${eventAddress}`} >
 
               <p className="card-text">  {name} </p>
@@ -30,12 +32,10 @@ export default function Listing() {
                 <small className="text-muted">{dateEve}</small>
               </div>
             </Link>
-            {/* </div> */}
           </div>
         </div>
       </div>
     });
-
 
 
   return (
@@ -46,8 +46,7 @@ export default function Listing() {
             <h1 className="fw-light">Liste des événements à venir</h1>
             <p className="lead text-muted">Vous souhaitez assister au concert de votre artiste préféré avec vos amis, offrir un billet de concert à l’un de vos proches, ou trouver la sortie idéale en amoureux. Avec BilleNFT vous n’aurez aucun mal à trouver en quelques clics un billet pour le concert de votre choix. </p>
             <p>
-              <a href="/addevent" className="btn btn-primary my-2">Créez un événement</a>
-              {/* <a href="#" className="btn btn-secondary my-2">Achetez un ticket</a> */}
+              {isAdmin && (<Link to="/addevent" className="btn btn-primary">Ajouter un événement</Link>)}
             </p>
           </div>
         </div>
@@ -55,11 +54,11 @@ export default function Listing() {
 
       <section className="py-5 text-center container">
         <div className="row">
-        {
-        !artifact ? <NoticeNoArtifact /> :
-          !contractBilleStore ? <NoticeWrongNetwork /> :
-          eventContent
-        }
+          {
+            !artifact ? <NoticeNoArtifact /> :
+              !contractBilleStore ? <NoticeWrongNetwork /> :
+                eventContent
+          }
         </div>
       </section>
 

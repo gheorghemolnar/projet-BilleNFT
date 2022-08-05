@@ -20,3 +20,6 @@ export const getDateFromTimestamp = (date) => {
     const dateEvent = Intl.DateTimeFormat('fr-FR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
     return dateEvent;
 }
+
+// Is App Owner
+export const isOwner = (currentUser, owner) => currentUser && currentUser.length > 0 ? currentUser[0] === owner : false;

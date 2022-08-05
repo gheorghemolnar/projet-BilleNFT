@@ -17,6 +17,7 @@ function EthProvider({ children }) {
         const { abi } = artifact;
         let address, contractBilleStore, contractBilleEvent, contractCommunication;
         let initEvents = [], ticketSolds = [];
+        let initOwner = false;
         try {
           address = artifact.networks[networkID].address;
           contractBilleStore = getContractStoreByAddress(web3, abi, address);
@@ -27,10 +28,12 @@ function EthProvider({ children }) {
           if(contractBilleStore && contractBilleEvent) {
             const options = { fromBlock: 0, toBlock: 'latest' };
 
-            [initEvents, ticketSolds] = await Promise.all([
+            [initOwner, initEvents, ticketSolds] = await Promise.all([
+              contractBilleStore.methods.owner().call(),
               contractBilleStore.getPastEvents('EventCreated', options),
               contractBilleEvent.getPastEvents('TicketSold', options)
             ]);
+
 
           }
         } catch (err) {
@@ -40,7 +43,7 @@ function EthProvider({ children }) {
         dispatch({
           type: actions.init,
           data: { artifact, web3, accounts, networkID, 
-            contractBilleStore, 
+            owner: initOwner, contractBilleStore, 
             contractBilleEvent, contractCommunication, 
             eventsCreated: [...initEvents], ticketsSold: [...ticketSolds] 
           }
