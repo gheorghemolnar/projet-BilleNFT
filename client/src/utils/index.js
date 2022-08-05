@@ -1,6 +1,20 @@
 import BilleEventABI from "../contracts/BilleEvent.json";
 import CommunicationABI from "../contracts/Communication.json";
 
+export const TICKET_CATEGORIES = [0, 1, 2];
+export const TICKET_CATEGORIES_LABELS = ['Fosse', 'Gradins', 'VIP'];
+
+export const getStatsAsObject = (arrValues) => {
+    const result = {sales: [], supplies: []};
+
+    for (let i = 0; i<TICKET_CATEGORIES.length; i++) {
+        result['sales'].push(arrValues[i]);
+        result['supplies'].push(arrValues[i+3]);
+    }
+
+    return result;
+}
+
 export const getContractStoreByAddress = (web3, abi, address) => {
     const contract = new web3.eth.Contract(abi, address, {gasPrice: '20000000000'});
     return contract;
