@@ -26,7 +26,6 @@ export default function FormEvent() {
 
   useEffect(() => {
     const fetchData = async(tmp) => {
-      // const address = contractBilleEvent.address();
       if(tmp){
         console.log(`🚀 balance Contrat ${id}`, await tmp.methods.getBalance().call({from: accounts[0]}));
       }
