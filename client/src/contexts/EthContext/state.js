@@ -1,7 +1,7 @@
 const actions = {
-  init: "INIT",  
-  eventAdded: "EVENTCREATED_ADDED",
-  ticketSoldAdded: "TICKETSOLD_ADDED"
+  INIT: "INIT",  
+  EVENT_CREATED: "EVENT_CREATED",
+  TICKET_SOLD: "TICKET_SOLD"
 };
 
 const initialState = {
@@ -10,23 +10,24 @@ const initialState = {
   accounts: null,
   networkID: null,
   contract: null,
-  billeEvent: null,
+  contractBilleEvent: null,
   eventsCreated: [],
   ticketsSold: [],
   owner: false
 };
 
 const reducer = (state, action) => {
+console.log(`🚀 ACTION `, action);
   const { type, data } = action;
   switch (type) {
-    case actions.init:
+    case actions.INIT:
       return { ...state, ...data };
-    case actions.eventAdded:
+    case actions.EVENT_CREATED:
         return {
            ...state, 
            eventsCreated: [...state.eventsCreated, data.evCreate]
           };
-    case actions.ticketSoldAdded:
+    case actions.TICKET_SOLD:
         return {
             ...state,
             ticketsSold: [...state.ticketsSold, data.evTicketSold]

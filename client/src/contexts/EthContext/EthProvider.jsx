@@ -41,7 +41,7 @@ function EthProvider({ children }) {
         }
         
         dispatch({
-          type: actions.init,
+          type: actions.INIT,
           data: { artifact, web3, accounts, networkID, 
             owner: initOwner, contractBilleStore, 
             contractBilleEvent, contractCommunication, 
@@ -81,30 +81,31 @@ function EthProvider({ children }) {
       })
       .on('data', event => {
         dispatch({
-          type: actions.eventAdded,
+          type: actions.EVENT_CREATED,
           data: {
             evCreate: event
           }
         })
       });
-      // add subscription for Voters
-      eventsSubscriptions['eventsCreate'] = subEvCreate;
+      // add subscription for Events
+      eventsSubscriptions['eventCreated'] = subEvCreate;
+    }
 
+    if(state.contractBilleEvent) {
       const subTicketSold = state.contractBilleEvent.events.TicketSold(options1)
       .on('connected', event => {
         console.log("Les détails de l'évènement sont connu", event);
       })
       .on('data', event => {
         dispatch({
-          type: actions.eventAdded,
+          type: actions.TICKET_SOLD,
           data: {
             evTicketSold: event
           }
         })
       });
-      // add subscription for Voters
-      eventsSubscriptions['TicketSold'] = subTicketSold;
-
+      // add subscription for Tickets
+      eventsSubscriptions['ticketSold'] = subTicketSold;
     }
 
     events.forEach(e => window.ethereum.on(e, handleChange));
