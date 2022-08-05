@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 
-import { getContractEventByAddress } from "../../utils";
+import { getContractEventByAddress, isOwner } from "../../utils";
 import useEth from "../../contexts/EthContext/useEth";
 import { getDateFromTimestamp, TICKET_CATEGORIES, TICKET_CATEGORIES_LABELS } from "../../utils";
 
 export default function ViewEvent() {
-  const { state: { web3, accounts, ticketsSold = [], eventsCreated = [] } } = useEth();
+  const { state: { web3, accounts, owner, ticketsSold = [], eventsCreated = [] } } = useEth();
   const [contractBilleEvent, setContractBilleEvent] = useState(null);
   const [stats, setStats] = useState( { balance: '', ticketsStats: [] });
 
   const { id } = useParams();
-  const showEventStats = contractBilleEvent;
+  const showEventStats = contractBilleEvent && isOwner(accounts, owner);
 
   useEffect(() => {
     if (web3 && (!contractBilleEvent)) {
@@ -45,8 +45,8 @@ export default function ViewEvent() {
     // Stats sales / supply by Ticket category
     eventStatsTickets = TICKET_CATEGORIES.map(i => {
         return (<div key={i} className="row mb-3">
-          <label htmlFor="colFormLabel" className="col-sm-4 col-form-label">Tickets {`${TICKET_CATEGORIES_LABELS[i]}`}</label>
-          <div className="col-sm-8">
+          <label htmlFor="colFormLabel" className="col-sm-3 col-form-label">Tickets {`${TICKET_CATEGORIES_LABELS[i]}`}</label>
+          <div className="col-sm-9">
             <input type="email" className="form-control  text-end" id="colFormLabel" placeholder="col-form-label" value={`${stats.ticketsStats[i]} / ${stats.ticketsStats[i+3]}`} disabled />
           </div>
         </div>
@@ -54,18 +54,18 @@ export default function ViewEvent() {
     })
 
     // Stats balance
-    eventStats = <section className="py-5 text-center">
+    eventStats = <section className="event-view container py-5 bg-light">
       <h4 className="fw-light">Admin - Event stats</h4>
       <div className="row mb-3">
-          <label htmlFor="colFormLabelSm" className="col-sm-4 col-form-label col-form-label">Balance</label>
-          <div className="col-sm-8">
+          <label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label col-form-label">Balance</label>
+          <div className="col-sm-9">
             <input type="email" className="form-control  text-end" id="colFormLabelSm" placeholder="col-form-label" value={stats.balance} disabled />
           </div>
       </div>
       {eventStatsTickets}
     </section>;
   }
-
+  
   return (
     <main>
       <section className="py-5 text-center container">
@@ -81,28 +81,28 @@ export default function ViewEvent() {
 
       <div className="event-view container p-3 bg-light">
         <div className="row mb-3">
-          <label htmlFor="colFormLabelSm" className="col-sm-2 col-form-label col-form-label">Date</label>
-          <div className="col-sm-10">
+          <label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label col-form-label">Date</label>
+          <div className="col-sm-9">
             <input type="email" className="form-control" id="colFormLabelSm" placeholder="col-form-label" value={eventInfos.date} disabled />
           </div>
         </div>
         <div className="row mb-3">
-          <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Name</label>
-          <div className="col-sm-10">
+          <label htmlFor="colFormLabel" className="col-sm-3 col-form-label">Name</label>
+          <div className="col-sm-9">
             <input type="email" className="form-control" id="colFormLabel" placeholder="col-form-label" value={eventInfos.name} disabled />
           </div>
         </div>
         <div className="row">
-          <label htmlFor="colFormLabelLg" className="col-sm-2 col-form-label col-form-label">Description</label>
-          <div className="col-sm-10">
+          <label htmlFor="colFormLabelLg" className="col-sm-3 col-form-label col-form-label">Description</label>
+          <div className="col-sm-9">
             <input type="email" className="form-control" id="colFormLabelLg" placeholder="col-form-label" value={eventInfos.description} disabled />
           </div>
         </div>
       </div>
+      <br/>
       {
         showEventStats && eventStats
       }
-
       <section className="py-5 text-center container">
         <div className="row py-lg-5">
           <div className="col-lg-6 col-md-8 mx-auto">
