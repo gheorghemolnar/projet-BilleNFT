@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useForm, Controller } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useForm } from "react-hook-form";
+import { useNavigate, Link } from 'react-router-dom';
 import useEth from "../../contexts/EthContext/useEth";
 
 export default function FormEvent() {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { state: { accounts, contractBilleStore, contractBilleEvent, contractCommunication, eventsCreated, ticketsSold } } = useEth();
+  const { state: { accounts, contractBilleStore } } = useEth();
   const onSubmit = async data => {
     console.log(data);
     await handleCreateEvent(data);
@@ -31,7 +31,6 @@ export default function FormEvent() {
         <div className="row py-lg-5">
           <div className="col-lg-6 col-md-8 mx-auto">
             <h1 className="fw-light">Ajout nouvel événement</h1>
-            {/* <p className="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p> */}
           </div>
         </div>
       </section>
@@ -94,6 +93,15 @@ export default function FormEvent() {
         </div>
 
       </form>
+
+      <section className="py-5 text-center container">
+        <div className="row py-lg-5">
+          <div className="col-lg-6 col-md-8 mx-auto">
+            <Link to="/" className="btn btn-sm btn-outline-secondary">Tous les événements</Link>
+          </div>
+        </div>
+      </section>
+
     </main>
   );
 

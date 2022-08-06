@@ -6,7 +6,7 @@ import useEth from "../../contexts/EthContext/useEth";
 import { getDateFromTimestamp, TICKET_CATEGORIES, TICKET_CATEGORIES_LABELS } from "../../utils";
 
 export default function ViewEvent() {
-  const { state: { web3, accounts, owner, ticketsSold = [], eventsCreated = [] } } = useEth();
+  const { state: { web3, accounts, owner, eventsCreated = [] } } = useEth();
   const [contractBilleEvent, setContractBilleEvent] = useState(null);
   const [stats, setStats] = useState( { balance: '', ticketsStats: [] });
 
@@ -18,7 +18,7 @@ export default function ViewEvent() {
       const contractEvent = getContractEventByAddress(web3, id);
       setContractBilleEvent(contractEvent);
     }
-  }, [web3]);
+  }, [web3, contractBilleEvent, id]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +33,7 @@ export default function ViewEvent() {
     if (contractBilleEvent) {
       fetchData();
     }
-  }, [contractBilleEvent]);
+  }, [web3, accounts, contractBilleEvent, stats]);
 
   let eventInfos = { date: '', description: '', eventAddress: '', name: '', uri: '' }, eventStats, eventStatsTickets;
   const [currentEvent] = eventsCreated.filter(({ returnValues: { eventAddress } }) => eventAddress === id);

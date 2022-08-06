@@ -5,14 +5,24 @@ import NoticeNoArtifact from "../NoticeNoArtifact";
 import NoticeWrongNetwork from "../NoticeWrongNetwork";
 import useEth from "../../contexts/EthContext/useEth";
 import { getDateFromTimestamp, isOwner } from "../../utils";
-import { useEffect } from 'react';
 
 export default function Listing() {
-  const { state: { artifact, contractBilleStore, eventsCreated, accounts, web3, networkID, owner } } = useEth();
+  const { state: { artifact, contractBilleStore, eventsCreated, accounts, owner } } = useEth();
   
   const isAdmin = isOwner(accounts, owner);
+  const eventHeader = <section key="header" className="py-5 text-center container">
+      <div className="row py-lg-5">
+        <div className="col-lg-6 col-md-8 mx-auto">
+          <h1 className="fw-light">Liste des événements à venir</h1>
+          <p className="lead text-muted">Vous souhaitez assister au concert de votre artiste préféré avec vos amis, offrir un billet de concert à l’un de vos proches, ou trouver la sortie idéale en amoureux.Avec BilleNFT vous n’aurez aucun mal à trouver en quelques clics un billet pour le concert de votre choix.</p>
+          <p>
+            {isAdmin && (<Link to="/addevent" className="btn btn-primary">Ajouter un événement</Link>)}
+          </p>
+        </div>
+      </div>
+    </section>;
   
-  const eventContent =
+  const eventList =
     eventsCreated.map(({ returnValues }) => {
       const { eventAddress, name, description, date } = returnValues;
       const dateEve = getDateFromTimestamp(date);
@@ -36,22 +46,10 @@ export default function Listing() {
         </div>
       </div>
     });
-
+  const eventContent = [eventHeader, eventList ];
 
   return (
     <main>
-      <section className="py-5 text-center container">
-        <div className="row py-lg-5">
-          <div className="col-lg-6 col-md-8 mx-auto">
-            <h1 className="fw-light">Liste des événements à venir</h1>
-            <p className="lead text-muted">Vous souhaitez assister au concert de votre artiste préféré avec vos amis, offrir un billet de concert à l’un de vos proches, ou trouver la sortie idéale en amoureux. Avec BilleNFT vous n’aurez aucun mal à trouver en quelques clics un billet pour le concert de votre choix. </p>
-            <p>
-              {isAdmin && (<Link to="/addevent" className="btn btn-primary">Ajouter un événement</Link>)}
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section className="py-5 text-center container">
         <div className="row">
           {

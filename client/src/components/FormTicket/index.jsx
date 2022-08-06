@@ -39,7 +39,7 @@ export default function FormEvent() {
       fetchData(tmp);
 
     }
-  }, [web3]);
+  }, [web3, accounts, id]);
 
   const handleChange = (e) => {
     let inputValue = e.target.value;

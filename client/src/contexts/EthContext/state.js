@@ -7,8 +7,8 @@ const actions = {
 const initialState = {
   artifact: null,
   web3: null,
-  accounts: null,
-  networkID: null,
+  accounts: [],
+  networkID: '',
   contract: null,
   contractBilleEvent: null,
   eventsCreated: [],
@@ -17,7 +17,6 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-console.log(`🚀 ACTION `, action);
   const { type, data } = action;
   switch (type) {
     case actions.INIT:
