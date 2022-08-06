@@ -8,7 +8,7 @@ import { getDateFromTimestamp, isOwner } from "../../utils";
 
 export default function Listing() {
   const { state: { artifact, contractBilleStore, eventsCreated, accounts, owner } } = useEth();
-  
+
   const isAdmin = isOwner(accounts, owner);
   const eventHeader = <section key="header" className="py-5 text-center container">
       <div className="row py-lg-5">
