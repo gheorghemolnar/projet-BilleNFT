@@ -32,7 +32,16 @@ contract BilleStore is Ownable {
     ///@dev Allows the creation of an Event
     function createEvent(uint _date, 
         ///dev TODO: v2 uint[3] memory _prices, 
-        string memory _name, string memory _symbol, string memory _description, string memory _uri, uint[] memory _ticketSupplies) onlyOwner public {
+        string calldata _name, string memory _symbol, string memory _description, string memory _uri, uint[] memory _ticketSupplies) onlyOwner public {
+        
+        require(_date != 0, "Date is required");
+        require(keccak256(abi.encode(_name)) != keccak256(abi.encode("")), "Name is required");
+        require(keccak256(abi.encode(_symbol)) != keccak256(abi.encode("")), "Symbol is required");
+        require(keccak256(abi.encode(_description)) != keccak256(abi.encode("")), "Description is required");
+        require(keccak256(abi.encode(_uri)) != keccak256(abi.encode("")), "Uri is required");
+        require(_ticketSupplies[0] != 0, "Supply is required for 'Fosse' Tickets");
+        require(_ticketSupplies[1] != 0, "Supply is required for 'Gradin' Tickets");
+        require(_ticketSupplies[2] != 0, "Supply is required for 'VIP' Tickets");
 
         uint _id = _eventId.current();
         _eventId.increment();
