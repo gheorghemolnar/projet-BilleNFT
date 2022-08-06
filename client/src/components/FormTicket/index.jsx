@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Joi from 'joi';
 
-import { getContractEventByAddress } from "../../utils";
+import { getContractEventByAddress, isOwner } from "../../utils";
 import useEth from "../../contexts/EthContext/useEth";
 
 export default function FormEvent() {
-  const { state: { web3, accounts } } = useEth();
+  const { state: { web3, accounts, owner } } = useEth();
   
   const navigate = useNavigate();
   let {id} = useParams();
@@ -24,22 +24,24 @@ export default function FormEvent() {
     quantity: 1
   });
 
+  const isAdmin = isOwner(accounts, owner);
+
   useEffect(() => {
     const fetchData = async(tmp) => {
       if(tmp){
         console.log(`🚀 balance Contrat ${id}`, await tmp.methods.getBalance().call({from: accounts[0]}));
       }
-
-        setContractBilleEvent(tmp);
-      // return address;
     }
 
-    if (web3) {
+    if (web3 && id) {
       const tmp = getContractEventByAddress(web3, id);
-      fetchData(tmp);
+      setContractBilleEvent(tmp);
 
+      if (isAdmin) {
+        fetchData(tmp);
+      }
     }
-  }, [web3, accounts, id]);
+  }, [web3, accounts, id, owner]);
 
   const handleChange = (e) => {
     let inputValue = e.target.value;
@@ -86,7 +88,7 @@ export default function FormEvent() {
     });
 
     const joiResponse = schema.validate( ticketOrder  , { abortEarly: false});
-    
+
     if(joiResponse.error){
       setErrlist(joiResponse.error.details);
     }else{
