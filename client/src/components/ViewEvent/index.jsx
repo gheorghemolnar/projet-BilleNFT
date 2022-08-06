@@ -34,7 +34,7 @@ export default function ViewEvent() {
     if (isAdmin && contractBilleEvent) {
       fetchData();
     }
-  }, [web3, accounts, contractBilleEvent, stats]);
+  }, [web3, accounts, contractBilleEvent, stats, isAdmin]);
 
   let eventInfos = { date: '', description: '', eventAddress: '', name: '', uri: '' }, eventStats, eventStatsTickets;
   const [currentEvent] = eventsCreated.filter(({ returnValues: { eventAddress } }) => eventAddress === id);

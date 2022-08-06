@@ -41,7 +41,7 @@ export default function FormEvent() {
         fetchData(tmp);
       }
     }
-  }, [web3, accounts, id, owner]);
+  }, [web3, accounts, id, isAdmin]);
 
   const handleChange = (e) => {
     let inputValue = e.target.value;
