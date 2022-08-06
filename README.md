@@ -88,7 +88,7 @@ export default function FormEvent() {
  <input defaultValue="Toto" {...register("nameEvent")} />
 ```
  pour récupérer les informations de cet input.
- [Capture écran interface formulaire](https://drive.google.com/file/d/12SpfPR5BrlLsMS0p3IuUXTBLY5WMiIj3/view?usp=sharing)
+ ![Capture écran interface formulaire](https://drive.google.com/file/d/12SpfPR5BrlLsMS0p3IuUXTBLY5WMiIj3/view?usp=sharing)
 
  
  Nous voyons aussi la connexion avec la blockchain via la fonction createEvent dans ce code 
@@ -116,12 +116,13 @@ Dans le formulaire (components/Listing/index.jsx) ce bouton est masqué via cett
     {isAdmin && (<Link to="/addevent" className="btn btn-primary">Ajouter un événement</Link>)}
 </p>
 ```
-[Vu de l'évènement par l'administrateur](https://drive.google.com/file/d/1tC9wS82awir9ue0lNzH1pANAnXIY16Q8/view?usp=sharing)
+![Vu de l'évènement par l'administrateur](https://drive.google.com/file/d/1tC9wS82awir9ue0lNzH1pANAnXIY16Q8/view?usp=sharing)
+
 La création d'évènement fonctionne, ainsi que la vente de ticket pour le client. Il a accès aux informations de l'évènement choisi dans le listing avec cette interface.
-[Vu de l'évènement par le client](https://drive.google.com/file/d/1QeebOOqQQFiPUFKG8rfC3qVRaZV2dLO5/view?usp=sharing)
+![Vu de l'évènement par le client](https://drive.google.com/file/d/1QeebOOqQQFiPUFKG8rfC3qVRaZV2dLO5/view?usp=sharing)
 Puis en cliquant sur le bouton **J'y vais** il arrive sur cette interface
 
-[Achat de ticket par le client](https://drive.google.com/file/d/1fO6LsTtq_-l6qvGuAMICYmvkUHV0bLvf/view?usp=sharing)
+![Achat de ticket par le client](https://drive.google.com/file/d/1fO6LsTtq_-l6qvGuAMICYmvkUHV0bLvf/view?usp=sharing)
 
 
 # Gestion d'events avec getPastEvents
