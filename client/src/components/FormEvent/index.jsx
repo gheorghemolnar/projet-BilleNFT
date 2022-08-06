@@ -1,17 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
+import dotenv from 'dotenv';
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from 'react-router-dom';
 import useEth from "../../contexts/EthContext/useEth";
 
-export default function FormEvent() {
-  const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const { state: { accounts, contractBilleStore } } = useEth();
-  const onSubmit = async data => {
-    console.log(data);
-    await handleCreateEvent(data);
-  }
+dotenv.config();
 
+export default function FormEvent() {
+  const { state: { accounts, contractBilleStore } } = useEth();
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
+  const [ isLoading, setIsLoading ] = useState(false);
+  const [ fileImg, setFileImg ] = useState(null);
+
+  const onSubmit = async data => {
+    const { nameEvent } = data;
+    
+    try {
+      setIsLoading(true);
+
+      const cidImage = await sendFileToIPFS(nameEvent);
+      const newData = {...data, uri: cidImage};
+
+      await handleCreateEvent(newData);
+
+    } catch (err) {
+      console.log("Error occured", err);
+    }finally{
+      setIsLoading(true);
+    }
+  }
 
   const handleCreateEvent = async (params) => {
     const { dateEvent, nameEvent, symbol, description, uri, ticketSupply1, ticketSupply2, ticketSupply3 } = params;
@@ -24,6 +43,38 @@ export default function FormEvent() {
     }
   }
 
+  const sendFileToIPFS = async (eventName) => {
+    const timestamp = Number(Date.now());
+    const fileName = `${fileImg.name}`;
+    const filePath = `/${timestamp}-${eventName}/${fileName}`;
+
+    if (fileImg) {
+      try {
+        const formData = new FormData();
+        formData.append("file", fileImg, filePath);
+
+        const resFile = await axios({
+          method: "post",
+          url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+          data: formData,
+          headers: {
+            'pinata_api_key': `${process.env.REACT_APP_PINATA_API_KEY}`,
+            'pinata_secret_api_key': `${process.env.REACT_APP_PINATA_API_SECRET}`,
+            "Content-Type": "multipart/form-data"
+          },
+        });
+
+        const cidImage = `ipfs://${resFile.data.IpfsHash}/${fileName}`;
+        console.log("Image uploaded to Pinata", cidImage);
+
+        return cidImage;
+
+      } catch (err) {
+        console.log("Error sending File to IPFS: ");
+        console.log(err);
+      }
+    }
+  }
 
   return (
     <main>
@@ -38,13 +89,20 @@ export default function FormEvent() {
       <form className="p-3 bg-light" onSubmit={handleSubmit(onSubmit)} >
 
         <div className="mb-3 row">
-          <label htmlFor="name" className="col-sm-4 col-form-label">Nom de l'événement</label>
+          <label htmlFor="imageEvent" className="col-sm-4 col-form-label">Image événement</label>
+          <div className="col-sm-8">
+            <input type="file" {...register("imageEvent")} onChange={(e) =>setFileImg(e.target.files[0])} />
+          </div>
+        </div>
+
+        <div className="mb-3 row">
+          <label htmlFor="nameEvent" className="col-sm-4 col-form-label">Nom de l'événement</label>
           <div className="col-sm-8">
             <input defaultValue="Toto" {...register("nameEvent")} />
           </div>
         </div>
         <div className="mb-3 row">
-          <label htmlFor="date" className="col-sm-4 col-form-label">Date de l'évènement</label>
+          <label htmlFor="dateEvent" className="col-sm-4 col-form-label">Date de l'évènement</label>
           <div className="col-sm-8">
             <input defaultValue="2022-10-20" type="date" {...register("dateEvent")} />
           </div>
@@ -59,12 +117,6 @@ export default function FormEvent() {
           <label htmlFor="description" className="col-sm-4 col-form-label">Description</label>
           <div className="col-sm-8">
             <input defaultValue="La legende" {...register("description")} />
-          </div>
-        </div>
-        <div className="mb-3 row">
-          <label htmlFor="uri" className="col-sm-4 col-form-label">Uri</label>
-          <div className="col-sm-8">
-            <input defaultValue="181818222" {...register("uri")} />
           </div>
         </div>
         <div className="mb-3 row">
@@ -88,7 +140,11 @@ export default function FormEvent() {
 
         <div className="mb-3 row container text-center">
           <div className="col">
-            <button className="btn btn-primary" type="submit" >Envoyer</button>
+            <button className="btn btn-primary" type="submit" >{
+              isLoading ? <div className="spinner-border text-warning" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div> : "Envoyer"
+            }</button>
           </div>
         </div>
 
