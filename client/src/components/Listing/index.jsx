@@ -24,11 +24,13 @@ export default function Listing() {
   
   const eventList =
     eventsCreated.map(({ returnValues }) => {
-      const { eventAddress, name, description, date } = returnValues;
+      const { eventAddress, name, description, date, uri } = returnValues;
       const dateEve = getDateFromTimestamp(date);
+console.log(`🚀  uri`, `${uri.split('//')[1]}`);
 
       return <div className="col-lg-6 p-3" key={returnValues.id}>
         <div className="card shadow-sm">
+          <img src={`https://gateway.pinata.cloud/ipfs/${uri.split('//')[1]}`} alt="eventImage"/>
           <svg className="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
 
           <div className="card-body">
