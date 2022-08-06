@@ -11,7 +11,8 @@ export default function ViewEvent() {
   const [stats, setStats] = useState( { balance: '', ticketsStats: [] });
 
   const { id } = useParams();
-  const showEventStats = contractBilleEvent && isOwner(accounts, owner);
+  const isAdmin = isOwner(accounts, owner);
+  const showEventStats = contractBilleEvent && isAdmin;
 
   useEffect(() => {
     if (web3 && (!contractBilleEvent)) {
@@ -30,7 +31,7 @@ export default function ViewEvent() {
       setStats ({ ...stats, balance: `${web3.utils.fromWei(balance, 'ether')} Eth`, ticketsStats });
     }
 
-    if (contractBilleEvent) {
+    if (isAdmin && contractBilleEvent) {
       fetchData();
     }
   }, [web3, accounts, contractBilleEvent, stats]);
