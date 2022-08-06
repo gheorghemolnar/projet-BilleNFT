@@ -1,6 +1,10 @@
 import React from 'react';
 
+import useEth from "../../contexts/EthContext/useEth";
+
 export default function Navbar() {
+  const { state: { accounts } } = useEth();
+
   return (
     <header>
       <div className="collapse bg-dark" id="navbarHeader">
@@ -24,6 +28,7 @@ export default function Navbar() {
           <a href="/" className="navbar-brand d-flex align-items-center">
             <img src="https://web3.corsica/wp-content/uploads/2022/07/logo.png" alt="logo" width="211" height="57" fill="none"></img>
           </a>
+          <div className="center text-white">Compte : { accounts[0] }</div>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
