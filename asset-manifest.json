@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/projet-BilleNFT/events/static/css/main.8c43cafe.chunk.css",
-    "main.js": "/projet-BilleNFT/events/static/js/main.0cbd6527.chunk.js",
-    "main.js.map": "/projet-BilleNFT/events/static/js/main.0cbd6527.chunk.js.map",
-    "runtime-main.js": "/projet-BilleNFT/events/static/js/runtime-main.f901007c.js",
-    "runtime-main.js.map": "/projet-BilleNFT/events/static/js/runtime-main.f901007c.js.map",
-    "static/js/2.948f440b.chunk.js": "/projet-BilleNFT/events/static/js/2.948f440b.chunk.js",
-    "static/js/2.948f440b.chunk.js.map": "/projet-BilleNFT/events/static/js/2.948f440b.chunk.js.map",
-    "index.html": "/projet-BilleNFT/events/index.html",
-    "static/css/main.8c43cafe.chunk.css.map": "/projet-BilleNFT/events/static/css/main.8c43cafe.chunk.css.map",
-    "static/js/2.948f440b.chunk.js.LICENSE.txt": "/projet-BilleNFT/events/static/js/2.948f440b.chunk.js.LICENSE.txt"
+    "main.css": "/projet-BilleNFT/static/css/main.8c43cafe.chunk.css",
+    "main.js": "/projet-BilleNFT/static/js/main.0cbd6527.chunk.js",
+    "main.js.map": "/projet-BilleNFT/static/js/main.0cbd6527.chunk.js.map",
+    "runtime-main.js": "/projet-BilleNFT/static/js/runtime-main.4c55ca82.js",
+    "runtime-main.js.map": "/projet-BilleNFT/static/js/runtime-main.4c55ca82.js.map",
+    "static/js/2.8d245bd6.chunk.js": "/projet-BilleNFT/static/js/2.8d245bd6.chunk.js",
+    "static/js/2.8d245bd6.chunk.js.map": "/projet-BilleNFT/static/js/2.8d245bd6.chunk.js.map",
+    "index.html": "/projet-BilleNFT/index.html",
+    "static/css/main.8c43cafe.chunk.css.map": "/projet-BilleNFT/static/css/main.8c43cafe.chunk.css.map",
+    "static/js/2.8d245bd6.chunk.js.LICENSE.txt": "/projet-BilleNFT/static/js/2.8d245bd6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.f901007c.js",
-    "static/js/2.948f440b.chunk.js",
+    "static/js/runtime-main.4c55ca82.js",
+    "static/js/2.8d245bd6.chunk.js",
     "static/css/main.8c43cafe.chunk.css",
     "static/js/main.0cbd6527.chunk.js"
   ]
