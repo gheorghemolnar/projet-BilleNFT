@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/projet-BilleNFT/events/static/css/main.8c43cafe.chunk.css",
-    "main.js": "/projet-BilleNFT/events/static/js/main.95d98e52.chunk.js",
-    "main.js.map": "/projet-BilleNFT/events/static/js/main.95d98e52.chunk.js.map",
-    "runtime-main.js": "/projet-BilleNFT/events/static/js/runtime-main.f901007c.js",
-    "runtime-main.js.map": "/projet-BilleNFT/events/static/js/runtime-main.f901007c.js.map",
-    "static/js/2.948f440b.chunk.js": "/projet-BilleNFT/events/static/js/2.948f440b.chunk.js",
-    "static/js/2.948f440b.chunk.js.map": "/projet-BilleNFT/events/static/js/2.948f440b.chunk.js.map",
-    "index.html": "/projet-BilleNFT/events/index.html",
-    "static/css/main.8c43cafe.chunk.css.map": "/projet-BilleNFT/events/static/css/main.8c43cafe.chunk.css.map",
-    "static/js/2.948f440b.chunk.js.LICENSE.txt": "/projet-BilleNFT/events/static/js/2.948f440b.chunk.js.LICENSE.txt"
+    "main.css": "/events/static/css/main.8c43cafe.chunk.css",
+    "main.js": "/events/static/js/main.0d7c8297.chunk.js",
+    "main.js.map": "/events/static/js/main.0d7c8297.chunk.js.map",
+    "runtime-main.js": "/events/static/js/runtime-main.bc907b4d.js",
+    "runtime-main.js.map": "/events/static/js/runtime-main.bc907b4d.js.map",
+    "static/js/2.a3e0b81e.chunk.js": "/events/static/js/2.a3e0b81e.chunk.js",
+    "static/js/2.a3e0b81e.chunk.js.map": "/events/static/js/2.a3e0b81e.chunk.js.map",
+    "index.html": "/events/index.html",
+    "static/css/main.8c43cafe.chunk.css.map": "/events/static/css/main.8c43cafe.chunk.css.map",
+    "static/js/2.a3e0b81e.chunk.js.LICENSE.txt": "/events/static/js/2.a3e0b81e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.f901007c.js",
-    "static/js/2.948f440b.chunk.js",
+    "static/js/runtime-main.bc907b4d.js",
+    "static/js/2.a3e0b81e.chunk.js",
     "static/css/main.8c43cafe.chunk.css",
-    "static/js/main.95d98e52.chunk.js"
+    "static/js/main.0d7c8297.chunk.js"
   ]
 }
