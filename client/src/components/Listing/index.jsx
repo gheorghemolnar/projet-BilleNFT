@@ -16,7 +16,7 @@ export default function Listing() {
           <h1 className="fw-light">Liste des événements à venir</h1>
           <p className="lead text-muted">Vous souhaitez assister au concert de votre artiste préféré avec vos amis, offrir un billet de concert à l’un de vos proches, ou trouver la sortie idéale en amoureux.Avec BilleNFT vous n’aurez aucun mal à trouver en quelques clics un billet pour le concert de votre choix.</p>
           <p>
-            {isAdmin && (<Link to="/events/addevent" className="btn btn-primary">Ajouter un événement</Link>)}
+            {isAdmin && (<Link to="/events/add" className="btn btn-primary">Ajouter un événement</Link>)}
           </p>
         </div>
       </div>

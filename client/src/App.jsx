@@ -19,15 +19,15 @@ export default function App() {
             index: true, element: <Listing />,
         },
         {
+          path: "/events/:id/buyticket",
+          element: <FormTicket />,
+        },
+        {
           path: "/events/:id",
           element: <ViewEvent />,
         },
         {
-          path: "/buyticket/:id",
-          element: <FormTicket />,
-        },
-        {
-          path: "/addevent",
+          path: "/events/add",
           element: <FormEvent />,
         },
         { path: "*", element: <NoMatch /> },
