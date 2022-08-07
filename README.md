@@ -11,6 +11,10 @@ Un site web a été créé pour la dApp avec lequel on peut créer un évènemen
 https://web3.corsica/ 
 La connexion à la DApp sera faite ultérieurement à cause du routage de react qui entre en conflit avec l'architecture du site.
 
+NOTE:
+  Pour des raisons lié à Metamask, l'affichage des tickets ne fonctionne plus; mais le code est bien en place et a déjà fonctionée.
+
+
 Le projet est scindé en deux dossiers principaux
 
 - client
