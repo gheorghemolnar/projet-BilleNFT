@@ -5,9 +5,12 @@ const {
     expectRevert, // Assertions for transactions that should fail
 } = require('@openzeppelin/test-helpers');
 const { expect } = require('chai');
+const Web3 = require('web3');
 
 const BilleStore = artifacts.require("./BilleStore.sol");
 const BilleEvent = artifacts.require("./BilleEvent.sol");
+
+const TICKET_UNIT_PRICE = 0.02;
 
 const TicketCategory = {
     CODE_DOE: 0,
@@ -17,16 +20,17 @@ const TicketCategory = {
 };
 
 contract("BilleStore", async (accounts) => {
+    const owner = accounts[0];
+    const customer01 = accounts[1];
+    const customer02 = accounts[2];
+    const customer03 = accounts[3];
+    const customer04 = accounts[4];
+
+
     context("Initialising Store / Event", () => {
         let billeStoreInstance;
         let billeEventInstanceEmpty;
         
-        const owner = accounts[0];
-        const customer01 = accounts[1];
-        const customer02 = accounts[2];
-        const customer03 = accounts[3];
-        const customer04 = accounts[4];
-
         describe("When creating Store Event", async () => {
             beforeEach(async () => {
                 billeStoreInstance = await BilleStore.new({ from: owner });
@@ -112,39 +116,34 @@ contract("BilleStore", async (accounts) => {
     });
 
     context.only("With a valid Store / Event", () => {
-        let billeEventInstanceEmpty;
+        const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+
         let billeStoreInstance;
         let billeEventInstance;
+
         
-        const owner = accounts[0];
-        const customer01 = accounts[1];
-        const customer02 = accounts[2];
-        const customer03 = accounts[3];
-        const customer04 = accounts[4];
-
         describe("Customer should", async () => {
-
-            beforeEach(async() => {
-                billeEventInstanceEmpty = await BilleEvent.new(0, 0, "", "", "", "", [0, 0, 0], { from: owner });
-                
+            before(async() => {              
                 billeStoreInstance = await BilleStore.new({ from: owner });
 
-                await billeStoreInstance.createEvent(12547332, "Pink Floyd - Greatest tour", "BNF", "Concert Olympia Paris", "URI", [50, 30, 10]);
+                await billeStoreInstance.createEvent(12547332, "Pink Floyd - Greatest tour", "BNF", "Concert Olympia Paris", "URI", [50, 30, 10], { from: owner });
+                await billeStoreInstance.createEvent(12547332, "Pink Martini - Greatest tour", "BNF", "Concert Olympia Paris", "URI", [50, 30, 10], { from: owner });
+                const newEventAddress = await billeStoreInstance.getEventAddress(1);
 
-                const newEventAddress = await billeStoreInstance.getEventAddress(0);
-console.log(`🚀 ~ file: BilleNFT_Test.js ~ line 135 ~ beforeEach ~ newEventAddress`, newEventAddress)
+                billeEventInstance = new web3.eth.Contract(BilleEvent.abi, newEventAddress);
 
-                billeEventInstance = billeEventInstanceEmpty;
-
-                billeEventInstance.address = newEventAddress;
             });
 
             it("should create an Ticket and emit TicketSold", async() => {
-                const ticketsBought = await billeEventInstance.buyTickets(TicketCategory.CODE_DOE, 1, { value: 20000000000000000, from: customer01 });
-                
-                expectEvent(ticketsBought, "TicketSold", {idEvent, idTicket, category, buyer, quantity});
-            });
+                const quantity = 1;
+                const ticketsBought = await billeEventInstance.methods.buyTickets(TicketCategory.CODE_STD, quantity).send({ 
+                    value: web3.utils.toWei(`${TICKET_UNIT_PRICE}`, 'ether') * quantity, 
+                    from: owner,
+                    gas: 1000000
+                });
 
+                expectEvent(ticketsBought, "TicketSold", {idEvent,idTicket,category,owner,quantity});
+            });
         });
     });
 });
