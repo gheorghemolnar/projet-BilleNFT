@@ -109,10 +109,10 @@ contract BilleEvent is ERC1155, ERC1155Holder, Ownable {
 
     ///@notice used to get the BilleEvent stats
     ///@dev used to get the BilleEvent stats: TODO: find a better approach
-    function getEventStats() public view onlyOwner returns(uint, uint, uint,uint, uint, uint) {
+    function getEventStats() public view onlyOwner returns(uint, uint, uint,uint, uint, uint, uint) {
         return (
             _ticketsSold[0].current(),_ticketsSold[1].current(), _ticketsSold[2].current(), 
-            _ticketsSupplies[0], _ticketsSupplies[1], _ticketsSupplies[2]
+            _ticketsSupplies[0], _ticketsSupplies[1], _ticketsSupplies[2], address(this).balance
         );
     }
 
