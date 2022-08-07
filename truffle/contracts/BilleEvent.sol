@@ -57,7 +57,7 @@ contract BilleEvent is ERC1155, ERC1155Holder, Ownable {
     mapping(uint => address) public _ticketsSoldTo;
 
     /// @dev Event emitted when a ticket is sold
-    event TicketSold(uint indexed idEvent, uint indexed id, TicketType category, address buyer, uint quantity);
+    event TicketSold(uint idEvent, uint id, TicketType category, address owner, uint quantity);
    
     constructor(uint _idEvent, uint _date, string memory _name, string memory _symbol, string memory _description, 
         string memory _uri, 
