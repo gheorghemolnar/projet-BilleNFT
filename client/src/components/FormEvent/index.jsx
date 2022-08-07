@@ -21,25 +21,33 @@ export default function FormEvent() {
     
     try {
       setIsLoading(true);
+      
+      let uri = "default";
+      if(fileImg && nameEvent){
+        const cidImage = await sendFileToIPFS(nameEvent);
+        uri = cidImage;
+      }
 
-      const cidImage = await sendFileToIPFS(nameEvent);
-      const newData = {...data, uri: cidImage};
+      const newData = {...data, uri};
 
       await handleCreateEvent(newData);
 
     } catch (err) {
       console.log("Error occured", err);
     }finally{
-      setIsLoading(true);
+      setIsLoading(false);
     }
   }
 
   const handleCreateEvent = async (params) => {
-    const { dateEvent, nameEvent, symbol, description, uri, ticketSupply1, ticketSupply2, ticketSupply3 } = params;
+    const { dateEvent, nameEvent, symbol, description, uri = "default", ticketSupply1, ticketSupply2, ticketSupply3 } = params;
+
     try {
       const dateTimestamp = Number(new Date(dateEvent));
+
       await contractBilleStore.methods.createEvent(dateTimestamp, nameEvent, symbol, description, uri, [ticketSupply1, ticketSupply2, ticketSupply3]).send({ from: accounts[0] });
       navigate('/');
+
     } catch (err) {
       console.log("Erreur", err);
     }

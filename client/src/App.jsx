@@ -2,7 +2,9 @@ import { Outlet, useRoutes } from "react-router-dom";
 
 import { EthProvider } from "./contexts/EthContext";
 import Navbar from "./components/Navbar";
+import Menu from "./components/Menu";
 import Listing from "./components/Listing";
+import ListingTickets from "./components/ListingTickets";
 import FormEvent from "./components/FormEvent";
 import ViewEvent from "./components/ViewEvent";
 import FormTicket from "./components/FormTicket";
@@ -19,16 +21,25 @@ export default function App() {
             index: true, element: <Listing />,
         },
         {
-          path: "/events/:id/buyticket",
-          element: <FormTicket />,
+          path: "/events",
+          children: [
+            {
+              path: "/events/:id/buyticket",
+              element: <FormTicket />,
+            },
+            {
+              path: "/events/:id",
+              element: <ViewEvent />
+            },
+            {
+              path: "/events/add",
+              element: <FormEvent />
+            },
+          ]
         },
         {
-          path: "/events/:id",
-          element: <ViewEvent />,
-        },
-        {
-          path: "/events/add",
-          element: <FormEvent />,
+          path: "/mytickets",
+          element: <ListingTickets />
         },
         { path: "*", element: <NoMatch /> },
       ],
@@ -48,6 +59,7 @@ function Layout() {
   return (
     <>
       <Navbar />
+      <Menu />
       <Outlet />
     </>
   );

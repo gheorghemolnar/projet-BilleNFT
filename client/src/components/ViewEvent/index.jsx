@@ -12,7 +12,8 @@ import {
 import useEth from "../../contexts/EthContext/useEth";
 
 export default function ViewEvent() {
-  const { state: { web3, accounts, owner, eventsCreated = [] } } = useEth();
+  const { state: { web3, accounts, owner, eventsCreated, ticketsSold } } = useEth();
+console.log(`🚀 ViewEvent ~ ticketsSold`, ticketsSold);
   const [contractBilleEvent, setContractBilleEvent] = useState(null);
   const [stats, setStats] = useState( { balance: formatAmount('0', web3), ticketsStats: ['0', '0', '0', '0', '0', '0', '0'] });
 
@@ -61,7 +62,7 @@ export default function ViewEvent() {
 
     // Stats balance
     eventStats = <section className="event-view container py-5 bg-light">
-      <h4 className="fw-light">Admin - Event stats</h4>
+      <h5 className="fw-light">Admin - Event stats</h5>
       <div className="row mb-3">
           <label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label col-form-label">Balance</label>
           <div className="col-sm-9">
@@ -86,10 +87,16 @@ export default function ViewEvent() {
       </section>
 
       <div className="event-view container p-3 bg-light">
-        <div className="row mb-3">
-          <label htmlFor="ticketPrice" className="col-sm-3 col-form-label col-form-label">Current price</label>
+      <div className="row mb-3">
+          <label htmlFor="colFormLabel" className="col-sm-3 col-form-label">Name</label>
           <div className="col-sm-9">
-            <input type="text" className="form-control w-25" id="ticketPrice" placeholder="col-form-label" value={`${TICKET_PRICE} Eth`} disabled />
+            <input type="text" className="form-control event-large-field" id="colFormLabel" placeholder="col-form-label" value={eventInfos.name} disabled />
+          </div>
+        </div>
+        <div className="row mb-3">
+          <label htmlFor="colFormLabelLg" className="col-sm-3 col-form-label col-form-label">Description</label>
+          <div className="col-sm-9">
+            <input type="text" className="form-control event-large-field" id="colFormLabelLg" placeholder="col-form-label" value={eventInfos.description} disabled />
           </div>
         </div>
         <div className="row mb-3">
@@ -99,15 +106,9 @@ export default function ViewEvent() {
           </div>
         </div>
         <div className="row mb-3">
-          <label htmlFor="colFormLabel" className="col-sm-3 col-form-label">Name</label>
+          <label htmlFor="ticketPrice" className="col-sm-3 col-form-label col-form-label">Ticket price</label>
           <div className="col-sm-9">
-            <input type="text" className="form-control event-large-field" id="colFormLabel" placeholder="col-form-label" value={eventInfos.name} disabled />
-          </div>
-        </div>
-        <div className="row">
-          <label htmlFor="colFormLabelLg" className="col-sm-3 col-form-label col-form-label">Description</label>
-          <div className="col-sm-9">
-            <input type="text" className="form-control event-large-field" id="colFormLabelLg" placeholder="col-form-label" value={eventInfos.description} disabled />
+            <input type="text" className="form-control w-25" id="ticketPrice" placeholder="col-form-label" value={`${TICKET_PRICE} Eth`} disabled />
           </div>
         </div>
       </div>
