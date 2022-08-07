@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { useForm } from "react-hook-form";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import useEth from "../../contexts/EthContext/useEth";
+import { NavToHome } from "../common";
 
 dotenv.config();
 
@@ -98,7 +100,7 @@ export default function FormEvent() {
         <div className="mb-3 row">
           <label htmlFor="nameEvent" className="col-sm-4 col-form-label">Nom de l'événement</label>
           <div className="col-sm-8">
-            <input defaultValue="Toto" {...register("nameEvent")} />
+            <input className="event-large-field" defaultValue="Group's Greatest tour in Paris" {...register("nameEvent")} />
           </div>
         </div>
         <div className="mb-3 row">
@@ -116,25 +118,25 @@ export default function FormEvent() {
         <div className="mb-3 row">
           <label htmlFor="description" className="col-sm-4 col-form-label">Description</label>
           <div className="col-sm-8">
-            <input defaultValue="La legende" {...register("description")} />
+            <input className="event-large-field" defaultValue="La legende - once in your lifetime !" {...register("description")} />
           </div>
         </div>
         <div className="mb-3 row">
           <label htmlFor="ticketSupplies1" className="col-sm-4 col-form-label">Nombre de tickets Pelouse</label>
           <div className="col-sm-8">
-            <input type="number" defaultValue={50} {...register("ticketSupply1")} />
+            <input type="number" className="text-end" defaultValue={50} {...register("ticketSupply1")} />
           </div>
         </div>
         <div className="mb-3 row">
           <label htmlFor="ticketSupplies2" className="col-sm-4 col-form-label">Nombre de tickets Gradin</label>
           <div className="col-sm-8">
-            <input type="number" defaultValue={30} {...register("ticketSupply2")} />
+            <input type="number" className="text-end" defaultValue={30} {...register("ticketSupply2")} />
           </div>
         </div>
         <div className="mb-3 row">
           <label htmlFor="ticketSupplies2" className="col-sm-4 col-form-label">Nombre de tickets VIP</label>
           <div className="col-sm-8">
-            <input type="number" defaultValue={10} {...register("ticketSupply3")} />
+            <input type="number" className="text-end" defaultValue={10} {...register("ticketSupply3")} />
           </div>
         </div>
 
@@ -150,13 +152,7 @@ export default function FormEvent() {
 
       </form>
 
-      <section className="py-5 text-center container">
-        <div className="row py-lg-5">
-          <div className="col-lg-6 col-md-8 mx-auto">
-            <Link to="/" className="btn btn-sm btn-outline-secondary">Tous les événements</Link>
-          </div>
-        </div>
-      </section>
+      {<NavToHome />}
 
     </main>
   );
