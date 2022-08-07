@@ -13,7 +13,7 @@ Le projet est scindé en deux dossiers principaux
 
 # Le dossier truffle
 
-Il contient trois contrats: 
+Il contient trois contrats : 
 
 - *BilleStore.sol*
 - *BilleEvent.sol* 
@@ -21,7 +21,7 @@ Il contient trois contrats:
 
 # Le dossier client 
 
-Dans le dossier **src** nous avons App.jsx qui contient les routes grace au composant react-router-dom.
+Dans le dossier **src** nous avons App.jsx qui contient les routes grâce au composant react-router-dom.
 
 Le fichier package.json a demandé des modifications pour déployer sur Github Pages. Voici le lien pour voir l'application ainsi déployé :
 
@@ -86,15 +86,17 @@ export default function FormEvent() {
   );
   ```
 
-  Nous avons ici le react-hook-form qui permet d'utiliser des propriétés de formulaire plus intérressant comme 
+  Nous avons ici le react-hook-form qui permet d'utiliser des propriétés de formulaire plus intéressant comme 
 
 ```js
  <input defaultValue="Toto" {...register("nameEvent")} />
 ```
 
  pour récupérer les informations de cet input.
- [Capture écran interface formulaire](https://drive.google.com/file/d/12SpfPR5BrlLsMS0p3IuUXTBLY5WMiIj3/view?usp=sharing)
 
+ ![L'administrateur ajoute un évènement via le formulaire](https://web3.corsica/wp-content/billenft/static/img/adminAjoutEvenementMM.png)
+*L'administrateur ajoute un évènement via le formulaire*
+ 
  Nous voyons aussi la connexion avec la blockchain via la fonction createEvent dans ce code 
 
 ```js
@@ -103,10 +105,15 @@ await contractBilleStore.methods.createEvent(dateTimestamp, nameEvent, symbol, d
 
 C'est cette fonction qui ajoute un évènement dans le contrat BilleStore, cet évènement est de type BilleEvent et il contient à ce titre la date sous forme de Timestamp, le nom de l'évènement, le symbol du NFT, la description de l'évènement, l'uri pour avoir un lien avec les metadata en json, et les trois catégories de billets (Pelouse, Gradin, Loge) avec le chiffre correspondant au nombre rentré dans le formulaire.
 
-# Gestion des droits Admin
+# Gestion des droits administrateur
+
+![L'interface lorsque l'administrateur se connecte au contrat tout juste deployé](https://web3.corsica/wp-content/billenft/static/img/interfaceArriveVideAdmin.png)
+*L'interface lorsque l'administrateur se connecte au contrat tout juste deployé*
 
 Seul l'administrateur de BilleNFT (du contrat deployé Billestore) a le droit d'ajouter un évènement.
-[Interface de l'admin avec un évènement créé](https://drive.google.com/file/d/1i9iyOq3AmPJPuU18KRQXaLBtvC1cPTDR/view?usp=sharing)
+
+![L'interface lorsque le client se connecte au contrat tout juste deployé](https://web3.corsica/wp-content/billenft/static/img/interfaceArriveVideClient.png)
+*L'interface lorsque le client se connecte au contrat tout juste deployé*
 
 Le client n'a pas le bouton permettant de créer un évènement, ceci grâce au code :
 
@@ -128,15 +135,28 @@ Dans le formulaire (components/Listing/index.jsx) ce bouton est masqué via cett
 </p>
 ```
 
-[Vu de l'évènement par l'administrateur](https://drive.google.com/file/d/1tC9wS82awir9ue0lNzH1pANAnXIY16Q8/view?usp=sharing)
+![Vu de l'évènement par l'administrateur](https://web3.corsica/wp-content/billenft/static/img/adminVoitInfoContract.png)
+*Vu de l'évènement par l'administrateur*
 
 La création d'évènement fonctionne, ainsi que la vente de ticket pour le client. Il a accès aux informations de l'évènement choisi dans le listing avec cette interface.
 
-[Vu de l'évènement par le client](https://drive.google.com/file/d/1QeebOOqQQFiPUFKG8rfC3qVRaZV2dLO5/view?usp=sharing)
+![Vu des évènements par le client](https://web3.corsica/wp-content/billenft/static/img/clientDetailEve.png)
+*Vu des évènements par le client*
+
+![Vu des détails de l'évènement par le client](https://web3.corsica/wp-content/billenft/static/img/clientVoitEve.png)
+*Vu des détails de l'évènement par le client*
 
 Puis en cliquant sur le bouton **J'y vais** il arrive sur cette interface
 
-[Achat de ticket par le client](https://drive.google.com/file/d/1fO6LsTtq_-l6qvGuAMICYmvkUHV0bLvf/view?usp=sharing)
+![Achat de ticket par le client](https://web3.corsica/wp-content/billenft/static/img/ClientAcheteTicket.png)
+*Achat de ticket par le client*
+
+Du côté de l'administrateur il voit avant l'achat du client
+![Vue administrateur](https://web3.corsica/wp-content/billenft/static/img/adminVoitInfoContract.png)
+*Lorsque l'administrateur consulte les détails d'un évènement, il a plus d'information qu'un client*
+
+![Interface administrateur après un achat permet de consulter la balance du contrat ainsi que le nombre de ticket vendu par catégorie](https://web3.corsica/wp-content/billenft/static/img/adminSeeInfoContractApresUnAchat.png)
+*Interface administrateur après un achat permet de consulter la balance du contrat ainsi que le nombre de ticket vendu par catégorie*
 
 # Gestion d'events avec getPastEvents
 
