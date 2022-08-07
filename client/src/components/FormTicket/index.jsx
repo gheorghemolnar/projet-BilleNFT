@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Joi from 'joi';
 
-import { getContractEventByAddress, isOwner } from "../../utils";
+import { getContractEventByAddress, isOwner, formatAmount, TICKET_PRICE } from "../../utils";
 import useEth from "../../contexts/EthContext/useEth";
 
 export default function FormEvent() {
@@ -100,6 +100,8 @@ export default function FormEvent() {
     
   };
   
+  const totalPrice = web3 ? formatAmount(`${web3.utils.toWei(`${TICKET_PRICE}`, 'ether') * ticketOrder.quantity}`, web3) : '0 Eth';
+
   return(
     <main>
       <section className="py-5 text-center container">
@@ -138,9 +140,16 @@ export default function FormEvent() {
         <div className="mb-3 row">
           <label htmlFor="ticketNumber" className="col-sm-4 form-label">Nombre de tickets:</label>
           <div className="col-sm-8">
-            <input type="number" className="form-control" id="quantity" min={1} max={4} onChange={handleChange} defaultValue={1} disabled={isLoading} />
+            <input type="number" className="form-control w-50" id="quantity" min={1} max={4} onChange={handleChange} defaultValue={1} disabled={isLoading} />
           </div>
         </div>
+        <div className="mb-3 row">
+          <label htmlFor="totalPrice" className="col-sm-4 form-label">Total price:</label>
+          <div className="col-sm-8">
+            <input type="text" className="form-control w-50" id="totalPrice" value={totalPrice} disabled />
+          </div>
+        </div>
+
         <div className="mb-3 row container text-center">
           <div className="col">
             <button type="submit" className="btn btn-primary" disabled={isLoading}>{
