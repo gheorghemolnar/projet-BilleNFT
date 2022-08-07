@@ -12,7 +12,8 @@ https://web3.corsica/
 La connexion à la DApp sera faite ultérieurement à cause du routage de react qui entre en conflit avec l'architecture du site.
 
 NOTE:
-  Pour des raisons lié à Metamask, l'affichage des tickets ne fonctionne plus; mais le code est bien en place et a déjà fonctionée.
+  Voici une impréssion écran sir le rendu du ticket
+  https://drive.google.com/file/d/163fDRFKIhV4qr9Ql2ymN9mEj0yy7dWHI/view?usp=sharing
 
 
 Le projet est scindé en deux dossiers principaux
