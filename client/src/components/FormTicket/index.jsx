@@ -59,7 +59,7 @@ export default function FormEvent() {
     const {category, quantity}= ticketOrder;
 
     if (contractBilleEvent) {
-      const price = web3.utils.toWei('0.02', 'ether') * quantity;
+      const price = web3.utils.toWei(`${TICKET_PRICE}`, 'ether') * quantity;
 
       try {
         setIsLoading(true);
