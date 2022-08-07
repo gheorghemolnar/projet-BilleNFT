@@ -19,12 +19,12 @@ export const getStatsAsObject = (arrValues) => {
 }
 
 export const getContractStoreByAddress = (web3, abi, address) => {
-    const contract = new web3.eth.Contract(abi, address, {gasPrice: '20000000000'});
+    const contract = new web3.eth.Contract(abi, address, {gas: '20000000000'});
     return contract;
 }
 
 export const getContractEventByAddress = (web3, address) => {
-    const contract = new web3.eth.Contract(BilleEventABI.abi, address, {gasPrice: '20000000000'});
+    const contract = new web3.eth.Contract(BilleEventABI.abi, address, {gas: '20000000000'});
     return contract;
 }
 
