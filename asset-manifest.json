@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/projet-BilleNFT/static/css/main.bb6513ce.chunk.css",
-    "main.js": "/projet-BilleNFT/static/js/main.d1a367ac.chunk.js",
-    "main.js.map": "/projet-BilleNFT/static/js/main.d1a367ac.chunk.js.map",
+    "main.js": "/projet-BilleNFT/static/js/main.399e6fcc.chunk.js",
+    "main.js.map": "/projet-BilleNFT/static/js/main.399e6fcc.chunk.js.map",
     "runtime-main.js": "/projet-BilleNFT/static/js/runtime-main.4c55ca82.js",
     "runtime-main.js.map": "/projet-BilleNFT/static/js/runtime-main.4c55ca82.js.map",
     "static/js/2.8d245bd6.chunk.js": "/projet-BilleNFT/static/js/2.8d245bd6.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.4c55ca82.js",
     "static/js/2.8d245bd6.chunk.js",
     "static/css/main.bb6513ce.chunk.css",
-    "static/js/main.d1a367ac.chunk.js"
+    "static/js/main.399e6fcc.chunk.js"
   ]
 }
