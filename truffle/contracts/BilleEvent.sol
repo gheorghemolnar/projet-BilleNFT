@@ -9,12 +9,12 @@ import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
 contract BilleEvent is ERC1155, ERC1155Holder, Ownable {
     using Counters for Counters.Counter;
 
-    uint id;
-    uint date;
+    uint public idEvent;
+    uint public date;
 
-    string name;
-    string symbol;
-    string description;
+    string public name;
+    string public symbol;
+    string public description;
 
     ///@dev Ticket Categories
     uint constant NB_TICKET_CATEGORIES = 3;
@@ -57,17 +57,17 @@ contract BilleEvent is ERC1155, ERC1155Holder, Ownable {
     mapping(uint => address) public _ticketsSoldTo;
 
     /// @dev Event emitted when a ticket is sold
-    event TicketSold(uint idEvent, uint id, TicketType category, address owner, uint quantity);
-   
+    event TicketSold(uint idEvent, uint idTicket, uint category, address owner, uint quantity);
+
     constructor(uint _idEvent, uint _date, string memory _name, string memory _symbol, string memory _description, 
         string memory _uri, 
         ///@dev TODO: v2
         //uint[] memory _prices, 
         uint[] memory _supplies) ERC1155(_uri) {
-            id = _idEvent;
-            date = _date;
-            name = _name;
-            symbol = _symbol;
+            idEvent     = _idEvent;
+            date        = _date;
+            name        = _name;
+            symbol      = _symbol;
             description = _description;
             
             ///@dev Initialisations
@@ -95,11 +95,11 @@ contract BilleEvent is ERC1155, ERC1155Holder, Ownable {
             uint idTicket = _ticketsSold[_category].current();
             _ticketsSold[_category].increment();
 
-            _mint(address(this), idTicket, 1, "");
+            _mint(msg.sender, idTicket, 1, "");
             _ticketsList[idTicket] = TicketInfo({id: idTicket, place: idTicket + 1, isSold: true, isUsed: false, category: TicketType(_category)});
             _ticketsSoldTo[idTicket] = msg.sender;
 
-            emit TicketSold(id, idTicket, TicketType(_category), msg.sender, 1);
+            emit TicketSold(idEvent, idTicket, _category, msg.sender, 1);
         }
     }
 
