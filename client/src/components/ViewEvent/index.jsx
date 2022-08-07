@@ -10,10 +10,10 @@ import {
   TICKET_CATEGORIES_LABELS,
   TICKET_PRICE } from "../../utils";
 import useEth from "../../contexts/EthContext/useEth";
+import { actions } from "../../contexts/EthContext/state";
 
 export default function ViewEvent() {
-  const { state: { web3, accounts, owner, eventsCreated, ticketsSold } } = useEth();
-console.log(`🚀 ViewEvent ~ ticketsSold`, ticketsSold);
+  const { state: { web3, accounts, owner, eventsCreated, ticketsSold, handleDispatch } } = useEth();
   const [contractBilleEvent, setContractBilleEvent] = useState(null);
   const [stats, setStats] = useState( { balance: formatAmount('0', web3), ticketsStats: ['0', '0', '0', '0', '0', '0', '0'] });
 
@@ -34,13 +34,17 @@ console.log(`🚀 ViewEvent ~ ticketsSold`, ticketsSold);
       const ticketsStats = Object.values(ticketsStatsObject);
       const balance = `${ticketsStats.slice(-1)[0]}`;
 
+      const options = { fromBlock: 0, toBlock: 'latest' };
+      const [tickets] = await contractBilleEvent.getPastEvents('TicketSold', options);
       setStats(stats => ({ ...stats, balance: formatAmount(balance, web3), ticketsStats }));
+
+      handleDispatch({type: actions.TICKET_SOLD, data: { evTicketSold: tickets }});
     }
 
     if (isAdmin && contractBilleEvent) {
       fetchData();
     }
-  }, [web3, accounts, contractBilleEvent, isAdmin]);
+  }, [web3, accounts, contractBilleEvent, isAdmin, handleDispatch]);
 
   let eventInfos = { date: '', description: '', eventAddress: '', name: '', uri: '' }, eventStats, eventStatsTickets;
   const [currentEvent] = eventsCreated.filter(({ returnValues: { eventAddress } }) => eventAddress === id);

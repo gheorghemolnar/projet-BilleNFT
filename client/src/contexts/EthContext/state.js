@@ -13,7 +13,8 @@ const initialState = {
   contractBilleEvent: null,
   eventsCreated: [],
   ticketsSold: [],
-  owner: false
+  owner: false,
+  handleDispatch: () => {}
 };
 
 const reducer = (state, action) => {
