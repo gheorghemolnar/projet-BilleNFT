@@ -46,7 +46,7 @@ export default function FormEvent() {
       const dateTimestamp = Number(new Date(dateEvent));
 
       await contractBilleStore.methods.createEvent(dateTimestamp, nameEvent, symbol, description, uri, [ticketSupply1, ticketSupply2, ticketSupply3]).send({ from: accounts[0] });
-      navigate('/');
+      navigate('/events');
 
     } catch (err) {
       console.log("Erreur", err);
