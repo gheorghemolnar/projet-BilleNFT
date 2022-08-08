@@ -11,9 +11,6 @@ Un site web a été créé pour la dApp avec lequel on peut créer un évènemen
 https://web3.corsica/ 
 La connexion à la DApp sera faite ultérieurement à cause du routage de react qui entre en conflit avec l'architecture du site.
 
-NOTE:
-  Voici une impréssion écran sir le rendu du ticket
-  https://drive.google.com/file/d/163fDRFKIhV4qr9Ql2ymN9mEj0yy7dWHI/view?usp=sharing
 
 
 Le projet est scindé en deux dossiers principaux
@@ -167,6 +164,11 @@ Du côté de l'administrateur il voit avant l'achat du client
 
 ![Interface administrateur après un achat permet de consulter la balance du contrat ainsi que le nombre de ticket vendu par catégorie](https://web3.corsica/wp-content/billenft/static/img/adminSeeInfoContractApresUnAchat.png)
 *Interface administrateur après un achat permet de consulter la balance du contrat ainsi que le nombre de ticket vendu par catégorie*
+
+![Voici une impression écran sur le rendu du ticket](https://web3.corsica/wp-content/billenft/static/img/ticket.png)
+*Voici une impression écran sur le rendu du ticket*
+
+
 
 # Gestion d'events avec getPastEvents
 
