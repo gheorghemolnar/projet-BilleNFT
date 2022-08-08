@@ -8,6 +8,9 @@ Lien de la vidéo de démonstration
 https://www.loom.com/share/135cd7c19ef04da29573b99d023efbe9
 https://www.loom.com/share/037db279783a46aa82459b62ce55d76c
 
+GitHub Pages
+https://gheorghemolnar.github.io/projet-BilleNFT/
+
 Un site web a été créé pour la dApp avec lequel on peut créer un évènement avec la vente de ticket.
 https://web3.corsica/ 
 La connexion à la DApp sera faite ultérieurement à cause du routage de react qui entre en conflit avec l'architecture du site.
